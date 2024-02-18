@@ -3,14 +3,30 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { UsersComponent } from './components/users/users.component';
+import { RolesComponent } from './components/roles/roles.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
+import { AdminTemplateComponent } from './components/admin-template/admin-template.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
+import { UserDetailsComponent } from './components/users/user-details/user-details.component';
+import { CreateUserComponent } from './components/users/create-user/create-user.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    UsersComponent,
+    RolesComponent,
+    NavigationComponent,
+    AdminTemplateComponent,
+    UserDetailsComponent,
+    CreateUserComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

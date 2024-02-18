@@ -1,0 +1,64 @@
+<div class="card " *ngIf="usersPage$ |async as userPage ">
+    <div class="card-header text-bg-dark d-flex justify-content-between align-items-center">
+        <h3 class="mb-0">Manage Users</h3>
+        <div>
+            <button class="btn btn-success" routerLink="/admin/create-user"><i class="bi bi-person-fill-add h5"></i></button>
+            <button class="btn btn-secondary ms-2"><i class="bi bi-filetype-csv h5"></i></button>
+            <button class="btn btn-secondary ms-2"><i class="bi bi-file-earmark-excel-fill h5"></i></button>
+            <button class="btn btn-secondary ms-2"><i class="bi bi-file-earmark-pdf-fill h5"></i></button>
+        </div>
+    </div>
+    <div class="card-boyd" >
+        <table class="table table-sm">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Photo</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Roles</th>
+                    <th>Enabled</th>
+                    <th>Details</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="userPage.userDTOS">
+                <tr *ngFor="let user of userPage.userDTOS">
+                    <td class="text-center">{{user.id}}</td>
+                    <td><img class="img-fluid rounded-image " [src]="imagesToShow[user.id]" alt="User Image" alt=""></td>
+                    <td>{{user.firstName}}</td>
+                    <td>{{user.lastName}}</td>
+                    <td>{{user.email}}</td>
+                    <td>
+                        <ng-container *ngIf="user.roles && user.roles.length > 0; else emptyTdRoles">
+                       
+                            <span *ngFor="let role of user.roles">
+                                <span class="badge bg-success ms-1"> {{ role.name  | lowercase}}</span>
+                            </span>
+                            
+                        </ng-container>
+                        <ng-template #emptyTdRoles>
+                            <span class="badge bg-danger">No Role</span>
+                        </ng-template>
+                    </td>
+                    <td><i [ngClass]="user.enabled ==true ? 'bi bi-check-circle-fill text-primary h5' : 'bi bi-circle-fill text-secondary h5'"></i></td>
+                    <td>
+                        <button class="btn btn-primary" (click)="onGetUserDetails(user.id)"><i class="bi bi-list"></i></button>
+                    </td>
+                    <td> <button class="btn btn-outline-warning"><i class="bi bi-pencil-square"></i> </button></td>
+                    <td> <button class="btn btn-outline-danger"><i class="bi bi-trash-fill"></i></button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="card-footer text-bg-dark">
+        <ul class="nav mt-2">
+            <li *ngFor="let item of [].constructor(userPage.totalPages); let page=index;">
+                <a [ngClass]="page==currentPage ? 'btn btn-primary' :'btn btn-secondary'"
+                    (click)="goToPage(page)" class="nav-link" class="ms-2">{{page +1}}</a>
+            </li>
+        </ul>
+    </div>
+</div>

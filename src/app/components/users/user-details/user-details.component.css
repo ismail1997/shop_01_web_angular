@@ -1,0 +1,10 @@
+.rounded-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+}
+
+.clickable{
+    cursor: pointer;
+}
