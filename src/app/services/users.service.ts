@@ -32,5 +32,17 @@ export class UsersService {
     return this.http.get(`${environments.API_URL}${environments.USERS_ENDPOINT}/${id}/image`,{ responseType: 'blob', headers: headers });
   }
 
+  public checkIfEmailExistedAlready(email:string):Observable<boolean>{
+    return this.http.get<boolean>(`${environments.API_URL}${environments.USERS_CHECK_EMAIL_UNIQUENESS}/${email}`);
+  }
+
+  public uploadImage(id:number, formData:FormData){
+    return this.http.post<any>(`${environments.API_URL}${environments.USERS_ENDPOINT}/${id}/upload-image`,formData);
+  }
+
+  public createUser(user:User):Observable<User>{
+    return this.http.post<User>(`${environments.API_URL}${environments.USERS_ENDPOINT}`,user);
+  }
+
 
 }

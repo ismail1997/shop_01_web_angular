@@ -19,4 +19,13 @@ export class RolesService {
   public getOneRoleByID(id:number):Observable<Role>{
     return this.http.get<Role>(`${environments.API_URL}${environments.ROLES_ENDPOINT}/${id}`);
   }
+
+  public checkIfRoleExistedOrNot(roleName:string):Observable<boolean>{
+    return this.http.get<boolean>(`${environments.API_URL}${environments.ROLES_CHECK_EXISTENCE_ENDPOINT}/${roleName}`);
+  }
+
+  public createRole(role:Role):Observable<Role>{
+    return this.http.post<Role>(`${environments.API_URL}${environments.ROLES_ENDPOINT}`,role);
+  }
+
 }

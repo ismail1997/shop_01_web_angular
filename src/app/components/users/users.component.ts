@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UsersService } from '../../services/users.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { User } from '../../models/user.model';
 import { UserPage } from '../../models/userpage.model';
@@ -20,9 +20,12 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   imagesToShow: { [key: number]: string } = {};
 
-  constructor(private usersService : UsersService, private route : Router){}
+  public message: string | null = null;
+
+  constructor(private usersService : UsersService, private router : Router,private route: ActivatedRoute){}
 
   ngOnInit(): void {
+    this.showMessageOfCreation();
     this.getUsers();
     this.getImagesForUsers();
   }
@@ -35,7 +38,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   onGetUserDetails(id: number) {
-    this.route.navigateByUrl(`/admin/user-details/${id}`);
+    this.router.navigateByUrl(`/admin/user-details/${id}`);
   }
 
   goToPage(page: number) {
@@ -70,6 +73,19 @@ export class UsersComponent implements OnInit, OnDestroy {
     if (image) {
       reader.readAsDataURL(image);
     }
+  }
+
+  showMessageOfCreation(){
+    this.route.queryParams.subscribe(params => {
+      this.message = params['message'] || null;
+      if (this.message) {
+        setTimeout(() => {
+          this.message = null;
+          const cleanedUrl = this.router.url.split('?')[0];
+          history.replaceState(null, '', cleanedUrl); // Clean the URL
+        }, 3000); // Remove message after 3 seconds
+      }
+    });
   }
 
 }

@@ -1,0 +1,9 @@
+.checkbox-container {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+  
+  .checkbox-item {
+    margin-right: 10px; /* Adjust margin as needed */
+  }
+  
