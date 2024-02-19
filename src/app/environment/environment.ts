@@ -7,7 +7,11 @@ export const environments={
     USERS_ENDPOINT:"/users",
     USERS_PAGE_ENDPOINT:"/users/page-users",
     
-    
-    ROLE_ENDPOINT:"/roles"
+    ROLES_ENDPOINT:"/roles",
 
+    CATEGORIES_ENDPOINT:"/categories",
+    CATEGORY_PAGE_ENDPOINT:"/categories/page-categories",
+
+    BRANDS_ENDPOINT:"/brands",
+    BRANDS_PAGE_ENDPOINT:"/brands/page-brands",
 };
