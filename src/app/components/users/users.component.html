@@ -47,12 +47,12 @@
                             <span class="badge bg-danger">No Role</span>
                         </ng-template>
                     </td>
-                    <td><i [ngClass]="user.enabled ==true ? 'bi bi-check-circle-fill text-primary h5' : 'bi bi-circle-fill text-secondary h5'"></i></td>
+                    <td><button class="btn btn-sm" (click)="changeUserStatus(user.id,user.enabled)"><i [ngClass]="user.enabled ==true ? 'bi bi-check-circle-fill text-primary h5' : 'bi bi-circle-fill text-secondary h5'"></i></button></td>
                     <td>
-                        <button class="btn btn-primary" (click)="onGetUserDetails(user.id)"><i class="bi bi-list"></i></button>
+                        <button class="btn btn-secondary" (click)="onGetUserDetails(user.id)"><i class="bi bi-list"></i></button>
                     </td>
-                    <td> <button class="btn btn-outline-warning"><i class="bi bi-pencil-square"></i> </button></td>
-                    <td> <button class="btn btn-outline-danger"><i class="bi bi-trash-fill"></i></button></td>
+                    <td> <button class="btn btn-secondary"><i class="bi bi-pencil-square"></i> </button></td>
+                    <td> <button class="btn btn-warning"><i class="bi bi-trash-fill"></i></button></td>
                 </tr>
             </tbody>
         </table>

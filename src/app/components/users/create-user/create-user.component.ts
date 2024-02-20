@@ -38,6 +38,9 @@ export class CreateUserComponent implements OnInit,OnDestroy{
 
   public selectedRoles! : Role[];
 
+  maxSizeInBytes: number = 500 * 1024; // 500 KB
+  errorMessage: string | null = null;
+
 
   /*
   this for image
@@ -111,13 +114,13 @@ export class CreateUserComponent implements OnInit,OnDestroy{
         }
         
         this.userService.uploadImage(savedUser.id,formData).subscribe({
-          next:()=>{
-           
+          next:(d)=>{
+           console.log(d)
           },
           error:err=>console.log(err),
         })
 
-        this.router.navigateByUrl("/admin/users?message=User%20Created%20Successfully");
+        //this.router.navigateByUrl("/admin/users?message=User%20Created%20Successfully");
       },
       error:err=>{
         console.log(err);
@@ -169,10 +172,21 @@ export class CreateUserComponent implements OnInit,OnDestroy{
     })
   }
 
-  onFileSelected($event : any){
-    const file: File = $event.target.files[0];
-    this.selectedImageFile = file;
-    this.generateImagePreview(file);
+  onFileSelected(event: Event) {
+    const inputElement = event.target as HTMLInputElement;
+    if (inputElement.files && inputElement.files.length > 0) {
+      const file = inputElement.files[0];
+      if (file.size > this.maxSizeInBytes) {
+        this.errorMessage = 'File size exceeds the limit (500 KB).';
+        // Clear the input value to allow selecting a new file
+        inputElement.value = '';
+      } else {
+        this.errorMessage = null;
+        this.selectedImageFile = file;
+        // Proceed with generating image preview
+        this.generateImagePreview(file);
+      }
+    }
   }
 
   generateImagePreview(file: File): void {

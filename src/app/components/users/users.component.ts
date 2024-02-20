@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UsersService } from '../../services/users.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { User } from '../../models/user.model';
 import { UserPage } from '../../models/userpage.model';
 
@@ -14,15 +14,16 @@ export class UsersComponent implements OnInit, OnDestroy {
 
 
 
-  public usersPage$ !:Observable<UserPage>;
-  public currentPage : number = 0;
-  public pageSize : number =10;
+
+  public usersPage$ !: Observable<UserPage>;
+  public currentPage: number = 0;
+  public pageSize: number = 10;
 
   imagesToShow: { [key: number]: string } = {};
 
   public message: string | null = null;
 
-  constructor(private usersService : UsersService, private router : Router,private route: ActivatedRoute){}
+  constructor(private usersService: UsersService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.showMessageOfCreation();
@@ -30,11 +31,11 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.getImagesForUsers();
   }
   ngOnDestroy(): void {
-     
+
   }
 
-  getUsers(){
-    this.usersPage$ = this.usersService.getUsersPage(this.currentPage,this.pageSize);
+  getUsers() {
+    this.usersPage$ = this.usersService.getUsersPage(this.currentPage, this.pageSize);
   }
 
   onGetUserDetails(id: number) {
@@ -42,25 +43,25 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   goToPage(page: number) {
-    this.currentPage=page;
+    this.currentPage = page;
     this.getUsers();
-    this.imagesToShow=[];
+    this.imagesToShow = [];
     this.getImagesForUsers();
   }
 
   getImagesForUsers(): void {
     this.usersPage$.subscribe({
-      next:data=>{
-        data.userDTOS.forEach(user=>{
+      next: data => {
+        data.userDTOS.forEach(user => {
           this.usersService.getImageOfUser(user.id).subscribe({
-            next: d =>{
-              this.createImageFromBlob(d,user.id);
+            next: d => {
+              this.createImageFromBlob(d, user.id);
             },
-            error:err=>console.log(err)
+            error: err => console.log(err)
           })
         })
       },
-      error:err=>console.log(err)
+      error: err => console.log(err)
     })
   }
 
@@ -75,7 +76,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     }
   }
 
-  showMessageOfCreation(){
+  showMessageOfCreation() {
     this.route.queryParams.subscribe(params => {
       this.message = params['message'] || null;
       if (this.message) {
@@ -86,6 +87,33 @@ export class UsersComponent implements OnInit, OnDestroy {
         }, 3000); // Remove message after 3 seconds
       }
     });
+  }
+
+  changeUserStatus(userID: number, enabled: boolean) {
+    if (enabled === true) {
+      enabled = false;
+    } else {
+      enabled = true;
+    }
+    this.usersService.updateUserEnabledStatus(userID, enabled).subscribe({
+      next: data => {
+       this.usersPage$=this.usersPage$.pipe(map(userpage=>{
+        
+          //now we should find the modified user 
+          const modifiedUsers = userpage.userDTOS.map(user=>{
+            if(user.id===userID){
+              user.enabled=enabled;
+            }
+            return user;
+          })
+
+        return {...userpage,userDTOS:modifiedUsers};
+       }))
+      },
+      error: err => {
+        console.log(err)
+      }
+    })
   }
 
 }

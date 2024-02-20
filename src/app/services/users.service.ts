@@ -44,5 +44,9 @@ export class UsersService {
     return this.http.post<User>(`${environments.API_URL}${environments.USERS_ENDPOINT}`,user);
   }
 
+  public updateUserEnabledStatus(id:number,enabled: boolean | null = false){
+    return this.http.put(`${environments.API_URL}${environments.USERS_ENDPOINT}/${id}${environments.USERS_UPDATE_ENABLED_STATUS}?enabled=${enabled !== null ? enabled : false}`,{enabled});
+  }
+
 
 }

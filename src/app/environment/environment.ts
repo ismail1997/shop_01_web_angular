@@ -7,6 +7,7 @@ export const environments={
     USERS_ENDPOINT:"/users",
     USERS_PAGE_ENDPOINT:"/users/page-users",
     USERS_CHECK_EMAIL_UNIQUENESS:"/users/check-email-uniqueness",
+    USERS_UPDATE_ENABLED_STATUS:"/change-enabled-status",
     
     ROLES_ENDPOINT:"/roles",
     ROLES_CHECK_EXISTENCE_ENDPOINT:"/roles/check-existence",
