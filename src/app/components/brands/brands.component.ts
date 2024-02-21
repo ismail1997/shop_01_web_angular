@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BrandsService } from '../../services/brands.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { BrandPage } from '../../models/brandpage.model';
 import { ImageLoadingService } from '../../services/image-loading.service';
 
@@ -15,13 +15,16 @@ export class BrandsComponent implements OnInit,OnDestroy {
   public currentPage : number = 0;
   public pageSize : number =5;
 
+  private unsubscribe$ = new Subject<void>();
+
   constructor(private brandService : BrandsService, public imageLoadingService:ImageLoadingService){}
 
   ngOnInit(): void {
      this.getPageOfBrands();
   }
   ngOnDestroy(): void {
-     
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   getPageOfBrands(){
@@ -31,10 +34,10 @@ export class BrandsComponent implements OnInit,OnDestroy {
 
 
   getImageOfBrands(){
-    this.brandsPage$.subscribe({
+    this.brandsPage$.pipe(takeUntil(this.unsubscribe$)).subscribe({
       next: data=>{
         data.brandDTOS.forEach(brand=>{
-          this.brandService.getImageOfBrand(brand.id).subscribe({
+          this.brandService.getImageOfBrand(brand.id).pipe(takeUntil(this.unsubscribe$)).subscribe({
             next: d =>{
               this.imageLoadingService.createImageFromBlob(d,brand.id);
             },

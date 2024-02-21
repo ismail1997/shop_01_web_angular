@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UsersService } from '../../services/users.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, map } from 'rxjs';
+import { Observable, Subject, map, takeUntil } from 'rxjs';
 import { User } from '../../models/user.model';
 import { UserPage } from '../../models/userpage.model';
 
@@ -23,6 +23,9 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   public message: string | null = null;
 
+  private unsubscribe$ = new Subject<void>();
+
+
   constructor(private usersService: UsersService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -31,7 +34,8 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.getImagesForUsers();
   }
   ngOnDestroy(): void {
-
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   getUsers() {
@@ -50,10 +54,10 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   getImagesForUsers(): void {
-    this.usersPage$.subscribe({
+    this.usersPage$.pipe(takeUntil(this.unsubscribe$)).subscribe({
       next: data => {
         data.userDTOS.forEach(user => {
-          this.usersService.getImageOfUser(user.id).subscribe({
+          this.usersService.getImageOfUser(user.id).pipe(takeUntil(this.unsubscribe$)).subscribe({
             next: d => {
               this.createImageFromBlob(d, user.id);
             },
@@ -77,7 +81,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   showMessageOfCreation() {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.pipe(takeUntil(this.unsubscribe$)).subscribe(params => {
       this.message = params['message'] || null;
       if (this.message) {
         setTimeout(() => {
@@ -90,30 +94,29 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   changeUserStatus(userID: number, enabled: boolean) {
-    if (enabled === true) {
-      enabled = false;
-    } else {
-      enabled = true;
-    }
-    this.usersService.updateUserEnabledStatus(userID, enabled).subscribe({
-      next: data => {
-       this.usersPage$=this.usersPage$.pipe(map(userpage=>{
-        
-          //now we should find the modified user 
-          const modifiedUsers = userpage.userDTOS.map(user=>{
-            if(user.id===userID){
-              user.enabled=enabled;
-            }
-            return user;
+    enabled = !enabled;
+    this.usersService.updateUserEnabledStatus(userID, enabled).pipe(
+      takeUntil(this.unsubscribe$)
+    ).subscribe({
+      next: () => {
+        // Update the user's status in the local data
+        this.usersPage$ = this.usersPage$.pipe(
+          map(userPage => {
+            const modifiedUsers = userPage.userDTOS.map(user => {
+              if (user.id === userID) {
+                return { ...user, enabled }; // Update the user's enabled status
+              }
+              return user;
+            });
+            return { ...userPage, userDTOS: modifiedUsers }; // Return updated userPage
           })
-
-        return {...userpage,userDTOS:modifiedUsers};
-       }))
+        );
       },
       error: err => {
-        console.log(err)
+        console.log(err);
       }
-    })
+    });
   }
+  
 
 }

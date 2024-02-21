@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { UsersService } from '../../../services/users.service';
 import { RolesService } from '../../../services/roles.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { Role } from '../../../models/role.model';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../../models/user.model';
@@ -50,6 +50,7 @@ export class CreateUserComponent implements OnInit,OnDestroy{
    // Property to store the image preview URL
    imagePreview: string | ArrayBuffer | null = null;
 
+   private unsubscribe$ = new Subject<void>();
 
 
   constructor(private userService : UsersService, private roleService : RolesService,private fb: FormBuilder,
@@ -60,7 +61,8 @@ export class CreateUserComponent implements OnInit,OnDestroy{
      this.creatForm();
   }
   ngOnDestroy(): void {
-     
+     this.unsubscribe$.next();
+     this.unsubscribe$.complete();
   }
 
 
@@ -105,7 +107,7 @@ export class CreateUserComponent implements OnInit,OnDestroy{
     }
     console.log(this.user);
 
-    this.userService.createUser(this.user).subscribe({
+    this.userService.createUser(this.user).pipe(takeUntil(this.unsubscribe$)).subscribe({
       next:data=>{
         const savedUser : User = data;
         const formData = new FormData();
@@ -113,7 +115,7 @@ export class CreateUserComponent implements OnInit,OnDestroy{
           formData.append('image', this.selectedImageFile);
         }
         
-        this.userService.uploadImage(savedUser.id,formData).subscribe({
+        this.userService.uploadImage(savedUser.id,formData).pipe(takeUntil(this.unsubscribe$)).subscribe({
           next:(d)=>{
            console.log(d)
           },
@@ -145,7 +147,7 @@ export class CreateUserComponent implements OnInit,OnDestroy{
       });
     }
     this.selectedRoles = [];
-    this.roles.subscribe({
+    this.roles.pipe(takeUntil(this.unsubscribe$)).subscribe({
       next:data=>{
         
         checkArray.value.forEach((id:any)=>{
@@ -165,7 +167,7 @@ export class CreateUserComponent implements OnInit,OnDestroy{
       this.emailExisted=false;
       return ;
     }
-    this.userService.checkIfEmailExistedAlready(email).subscribe({
+    this.userService.checkIfEmailExistedAlready(email).pipe(takeUntil(this.unsubscribe$)).subscribe({
       next:data=>{
         this.emailExisted=data;
       }

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { RolesService } from '../../services/roles.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Role } from '../../models/role.model';
 
 @Component({
@@ -11,7 +11,8 @@ import { Role } from '../../models/role.model';
 export class RolesComponent implements OnInit, OnDestroy{
 
   public roles$ ! : Observable<Array<Role>>;
-
+  private unsubscribe$ = new Subject<void>();
+  
   constructor(private roleService : RolesService){}
 
   ngOnInit(): void {
@@ -19,7 +20,8 @@ export class RolesComponent implements OnInit, OnDestroy{
      
   }
   ngOnDestroy(): void {
-     
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
 

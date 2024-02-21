@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RolesService } from '../../../services/roles.service';
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-create-role',
@@ -13,6 +14,7 @@ export class CreateRoleComponent implements OnInit, OnDestroy{
 
   public createRoleFromGroup!: FormGroup;
   public roleExist : boolean =false;
+  private unsubscribe$ = new Subject<void>();
 
   constructor(private fb : FormBuilder,private roleService:RolesService, private router:Router){}
 
@@ -20,7 +22,8 @@ export class CreateRoleComponent implements OnInit, OnDestroy{
      this.createForme();
   }
   ngOnDestroy(): void {
-     
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   createForme(){
@@ -36,7 +39,7 @@ export class CreateRoleComponent implements OnInit, OnDestroy{
       this.roleExist = false; // Reset if name is empty
       return;
     }
-    this.roleService.checkIfRoleExistedOrNot(roleName).subscribe(
+    this.roleService.checkIfRoleExistedOrNot(roleName).pipe(takeUntil(this.unsubscribe$)).subscribe(
       {
         next:data=> {
           this.roleExist=data;
@@ -49,7 +52,7 @@ export class CreateRoleComponent implements OnInit, OnDestroy{
   handleCreateRole(){
     let role = this.createRoleFromGroup.value;
 
-    this.roleService.createRole(role).subscribe({
+    this.roleService.createRole(role).pipe(takeUntil(this.unsubscribe$)).subscribe({
       next:data=>{
         alert("Role has been successfully saved!");
         //this.createCustomerFormGroup.reset();

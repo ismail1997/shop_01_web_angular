@@ -15,6 +15,8 @@ import { CategoriesComponent } from './components/categories/categories.componen
 import { CapitalizePipe } from './pipes/capitalize.pipe';
 import { BrandsComponent } from './components/brands/brands.component';
 import { CreateRoleComponent } from './components/roles/create-role/create-role.component';
+import { ProductsComponent } from './components/products/products.component';
+import { CreateProductComponent } from './components/products/create-product/create-product.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { CreateRoleComponent } from './components/roles/create-role/create-role.
     CategoriesComponent,
     CapitalizePipe,
     BrandsComponent,
-    CreateRoleComponent
+    CreateRoleComponent,
+    ProductsComponent,
+    CreateProductComponent
   ],
   imports: [
     BrowserModule,
@@ -40,4 +44,6 @@ import { CreateRoleComponent } from './components/roles/create-role/create-role.
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+ }

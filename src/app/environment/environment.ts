@@ -17,4 +17,8 @@ export const environments={
 
     BRANDS_ENDPOINT:"/brands",
     BRANDS_PAGE_ENDPOINT:"/brands/page-brands",
+
+
+    PRODUCTS_ENDPOINT:"/products",
+    PRODCUTS_PAGE_ENDPOINT:"/products/page-products",
 };

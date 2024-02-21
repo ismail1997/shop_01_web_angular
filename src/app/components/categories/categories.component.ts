@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, signal } from '@angular/core';
 import { CategoriesService } from '../../services/categories.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject, takeUntil } from 'rxjs';
 import { CategoryPage } from '../../models/categorypage.model';
 
 @Component({
@@ -17,6 +17,8 @@ export class CategoriesComponent implements OnInit, OnDestroy{
 
   imagesToShow: { [key: number]: string } = {};
 
+  private unsubscribe$ = new Subject<void>();
+
   constructor(private categoryService :CategoriesService){}
 
   ngOnInit(): void {
@@ -24,7 +26,8 @@ export class CategoriesComponent implements OnInit, OnDestroy{
      this.getImagesForCategories();
   }
   ngOnDestroy(): void {
-     
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   getCategories(){
@@ -32,10 +35,10 @@ export class CategoriesComponent implements OnInit, OnDestroy{
   }
 
   getImagesForCategories(): void {
-    this.categoriesPage$.subscribe({
+    this.categoriesPage$.pipe(takeUntil(this.unsubscribe$)).subscribe({
       next:data=>{
         data.categoryDTOS.forEach(cat=>{
-          this.categoryService.getImageOfCategory(cat.id).subscribe({
+          this.categoryService.getImageOfCategory(cat.id).pipe(takeUntil(this.unsubscribe$)).subscribe({
             next: d =>{
               this.createImageFromBlob(d,cat.id);
             },

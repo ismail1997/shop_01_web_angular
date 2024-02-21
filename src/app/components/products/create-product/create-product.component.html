@@ -1,0 +1,70 @@
+<div class="">
+	<div class="card p-3 shadow d-flex  bg-light">
+		<h2 class="text-center p-3">Card with Tabs</h2>
+		<nav>
+			<div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+				<button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Home</button>
+				<button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</button>
+				<button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</button>
+			</div>
+		</nav>
+		<div class="tab-content p-3 border bg-light" id="nav-tabContent">
+			<div class="tab-pane fade active show" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+				<div class="row">
+                    <div class="col-md-6">
+                        <label for="nameInput" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="nameInput" [(ngModel)]="product.name">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="aliasInput" class="form-label">Alias</label>
+                        <input type="text" class="form-control" id="aliasInput" [(ngModel)]="product.alias">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="shortDescriptionInput" class="form-label">Short Description</label>
+                        <input type="text" class="form-control" id="shortDescriptionInput" [(ngModel)]="product.shortDescription">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="fullDescriptionInput" class="form-label">Full Description</label>
+                        <input type="text" class="form-control" id="fullDescriptionInput" [(ngModel)]="product.fullDescription">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="enabledInput" class="form-label">Enabled</label>
+                        <input type="checkbox" class="form-check-input" id="enabledInput" [(ngModel)]="product.enabled">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inStockInput" class="form-label">In Stock</label>
+                        <input type="checkbox" class="form-check-input" id="inStockInput" [(ngModel)]="product.inStock">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="costInput" class="form-label">Cost</label>
+                        <input type="number" class="form-control" id="costInput" [(ngModel)]="product.cost">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="priceInput" class="form-label">Price</label>
+                        <input type="number" class="form-control" id="priceInput" [(ngModel)]="product.price">
+                    </div>
+                </div>
+                <!-- Repeat similar structure for other properties -->
+                
+			</div>
+			<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+				<p><strong>This is some placeholder content the Profile tab's associated content.</strong>
+					Clicking another tab will toggle the visibility of this one for the next.
+					The tab JavaScript swaps classes to control the content visibility and styling. You can use it with
+					tabs, pills, and any other <code>.nav</code>-powered navigation.</p>
+			</div>
+			<div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+				<p><strong>This is some placeholder content the Contact tab's associated content.</strong>
+					Clicking another tab will toggle the visibility of this one for the next.
+					The tab JavaScript swaps classes to control the content visibility and styling. You can use it with
+					tabs, pills, and any other <code>.nav</code>-powered navigation.</p>
+			</div>
+		</div>
+	</div>
+</div>
