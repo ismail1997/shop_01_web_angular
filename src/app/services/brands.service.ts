@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Brand } from '../models/brand.model';
 import { environments } from '../environment/environment';
 import { BrandPage } from '../models/brandpage.model';
+import { Category } from '../models/category.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,15 @@ export class BrandsService {
 
   public getOneBrandByID(id:number):Observable<Brand>{
     return this.http.get<Brand>(`${environments.API_URL}${environments.BRANDS_ENDPOINT}/${id}`);
+  }
+
+  /**
+   *  This method is to get the categories of a specific Brand
+   * @param id (number) : the id of brand
+   * @returns  Observable of Array of categories
+   */
+  public getCategoriesOfBrand(id:number) : Observable<Array<Category>>{
+    return this.http.get<Array<Category>>(`${environments.API_URL}${environments.BRANDS_ENDPOINT}/${id}/categories`);
   }
 
   public getImageOfBrand(id:number) :Observable<Blob>{
