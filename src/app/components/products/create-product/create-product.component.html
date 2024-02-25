@@ -3,84 +3,295 @@
         <h2 class="text-center p-3">Card with Tabs</h2>
         <nav>
             <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
-                <button class="nav-link active" id="nav-overview-tab" data-bs-toggle="tab" data-bs-target="#nav-overview"
-                    type="button" role="tab" aria-controls="nav-overview" aria-selected="true">Overview</button>
-                <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
-                    type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</button>
-                <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact"
-                    type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</button>
+                <button class="nav-link active" id="nav-overview-tab" data-bs-toggle="tab"
+                    data-bs-target="#nav-overview" type="button" role="tab" aria-controls="nav-overview"
+                    aria-selected="true">Overview</button>
+                <button class="nav-link" id="nav-description-tab" data-bs-toggle="tab" data-bs-target="#nav-description"
+                    type="button" role="tab" aria-controls="nav-description" aria-selected="false">Description</button>
+                <button class="nav-link" id="nav-images-tab" data-bs-toggle="tab" data-bs-target="#nav-images"
+                    type="button" role="tab" aria-controls="nav-images" aria-selected="false">Images</button>
+                <button class="nav-link" id="nav-details-tab" data-bs-toggle="tab" data-bs-target="#nav-details"
+                    type="button" role="tab" aria-controls="nav-details" aria-selected="false">Details</button>
+                <button class="nav-link" id="nav-shipping-tab" data-bs-toggle="tab" data-bs-target="#nav-shipping"
+                    type="button" role="tab" aria-controls="nav-shipping" aria-selected="false">Shipping</button>
             </div>
         </nav>
-        <div class="tab-content p-3 border bg-light" id="nav-tabContent">
-            <div class="tab-pane fade active show" id="nav-overview" role="tabpanel" aria-labelledby="nav-overview-tab">
-                <div class="row">
-                    <div class="col-md-6 ">
-                        <label for="nameInput" class="form-label">Product Name</label>
-                        <input type="text" class="form-control" id="nameInput">
+        <form [formGroup]="createProductFormGroup" (ngSubmit)="handleCreateProduct()">
+            <div class="tab-content p-3 border bg-light" id="nav-tabContent">
+
+                <div class="tab-pane fade active show" id="nav-overview" role="tabpanel"
+                    aria-labelledby="nav-overview-tab">
+                    <div class="row">
+                        <div class="col-md-6 ">
+                            <label for="nameInput" class="form-label">Product Name</label>
+                            <input type="text" class="form-control" formControlName="name" id="nameInput">
+                            <small class="text-danger form-text " *ngIf="createProductFormGroup.controls['name'].touched
+                            && createProductFormGroup.controls['name'].errors
+                            && createProductFormGroup.controls['name'].errors!['required']">
+                                Name is Required
+                            </small>
+                            <small class="text-danger form-text "
+                                *ngIf="createProductFormGroup.controls['name'].errors?.['minlength']">
+                                Name must be at least 5 characters long.
+                            </small>
+                            <small class="text-danger form-text"
+                                *ngIf="createProductFormGroup.controls['name'].errors?.['maxlength']">
+                                Name must be less than 233 characters long.
+                            </small>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="aliasInput" class="form-label">Alias</label>
+                            <input type="text" class="form-control" formControlName="alias" id="aliasInput">
+                            <small class="text-danger form-text " *ngIf="createProductFormGroup.controls['alias'].touched
+                            && createProductFormGroup.controls['alias'].errors
+                            && createProductFormGroup.controls['alias'].errors!['required']">
+                                Alias is Required
+                            </small>
+                            <small class="text-danger form-text "
+                                *ngIf="createProductFormGroup.controls['alias'].errors?.['minlength']">
+                                Alias must be at least 5 characters long.
+                            </small>
+                            <small class="text-danger form-text"
+                                *ngIf="createProductFormGroup.controls['alias'].errors?.['maxlength']">
+                                Alias must be less than 233 characters long.
+                            </small>
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <label for="aliasInput" class="form-label">Alias</label>
-                        <input type="text" class="form-control" id="aliasInput">
-                    </div>
-                </div>
-                <div class="row mt-2">
-                    <div class="col-md-6">
-                        <div class="mb-3">
-                            <label for="selectInput" class="form-label">Select an option:</label>
-                            <select id="selectInput" class="form-select" (change)="onBrandSelected($event)">
-                                <option disabled selected>Select a brand</option>
-                                <option *ngFor="let brand of brands" [value]="brand.id">{{ brand.name }}</option>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <small class="text-danger form-text " *ngIf="createProductFormGroup.controls['brand'].touched
+                            && createProductFormGroup.controls['brand'].errors
+                            && createProductFormGroup.controls['brand'].errors!['required']">
+                                    Alias is Required
+                                </small>
+                                <label for="selectInput" class="form-label">Select a brand :</label>
+                                <select id="selectInput1" class="form-select" (change)="onBrandSelected($event)"
+                                    formControlName="brand">
+                                    <option disabled selected>Select a brand</option>
+                                    <option *ngFor="let brand of brands" [value]="brand.id">{{ brand.name }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6" *ngIf="categories">
+                            <label for="selectInput" class="form-label">Select a category :</label>
+                            <select id="selectInput2" class="form-select" formControlName="category">
+                                <option *ngFor="let c of categories" [value]="c.id">{{ c.name }}</option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-6" *ngIf="categories">
-                        <label for="selectInput" class="form-label">Select an option:</label>
-                        <select id="selectInput" class="form-select" >
-                            <option *ngFor="let c of categories" [value]="c.id">{{ c.name }}</option>
-                        </select>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <label for="enabledInput" class="form-label">Enabled</label>
+                            <input type="checkbox" class="form-check-input ms-3" formControlName="enabled"
+                                id="enabledInput">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inStockInput" class="form-label">In Stock</label>
+                            <input type="checkbox" class="form-check-input ms-3" id="inStockInput"
+                                formControlName="inStock">
+                        </div>
                     </div>
-                </div>
-                <div class="row mt-2">
-                    <div class="col-md-6">
-                        <label for="enabledInput" class="form-label">Enabled</label>
-                        <input type="checkbox" class="form-check-input ms-3" id="enabledInput">
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <label for="costInput" class="form-label">Cost</label>
+                            <input type="number" class="form-control" formControlName="cost" id="costInput">
+                            <small class="text-danger form-text " *ngIf="createProductFormGroup.controls['cost'].touched
+                            && createProductFormGroup.controls['cost'].errors
+                            && createProductFormGroup.controls['cost'].errors!['required']">
+                                Short Description is Required
+                            </small>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="priceInput" class="form-label">Price</label>
+                            <input type="number" class="form-control" formControlName="price" id="priceInput">
+                            <small class="text-danger form-text " *ngIf="createProductFormGroup.controls['price'].touched
+                            && createProductFormGroup.controls['price'].errors
+                            && createProductFormGroup.controls['price'].errors!['required']">
+                                Short Description is Required
+                            </small>
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <label for="inStockInput" class="form-label">In Stock</label>
-                        <input type="checkbox" class="form-check-input ms-3" id="inStockInput">
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <label for="costInput" class="form-label">Discount Price</label>
+                            <input type="number" class="form-control" formControlName="discountPercent" id="costInput">
+                        </div>
                     </div>
-                </div>
-                <div class="row mt-2">
-                    <div class="col-md-6">
-                        <label for="costInput" class="form-label">Cost</label>
-                        <input type="number" class="form-control" id="costInput">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="priceInput" class="form-label">Price</label>
-                        <input type="number" class="form-control" id="priceInput">
-                    </div>
-                </div>
-                <div class="row mt-2">
-                    <div class="col-md-6">
-                        <label for="costInput" class="form-label">Discount Price</label>
-                        <input type="number" class="form-control" id="costInput">
-                    </div>
-                </div>
-                <!-- Repeat similar structure for other properties -->
+                    <!-- Repeat similar structure for other properties -->
 
+                </div>
+                <div class="tab-pane fade" id="nav-description" role="tabpanel" aria-labelledby="nav-description-tab">
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            Short Description :
+                            <small class="text-danger form-text " *ngIf="createProductFormGroup.controls['shortDescription'].touched
+                            && createProductFormGroup.controls['shortDescription'].errors
+                            && createProductFormGroup.controls['shortDescription'].errors!['required']">
+                                Short Description is Required
+                            </small>
+                            <small class="text-danger form-text "
+                                *ngIf="createProductFormGroup.controls['shortDescription'].errors?.['minlength']">
+                                Short Description must be at least 20 characters long.
+                            </small>
+                            <small class="text-danger form-text"
+                                *ngIf="createProductFormGroup.controls['shortDescription'].errors?.['maxlength']">
+                                Short Description must be less than 512 characters long.
+                            </small>
+                        </div>
+                        <div class="col-md-10 mt-2">
+                            <quill-editor [styles]="{'height':'70px'}" formControlName="shortDescription"
+                                (onEditorChanged)="changedEditor($event)"></quill-editor>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            Full Description :
+                            <small class="text-danger form-text " *ngIf="createProductFormGroup.controls['fullDescription'].touched
+                            && createProductFormGroup.controls['fullDescription'].errors
+                            && createProductFormGroup.controls['fullDescription'].errors!['required']">
+                                Full Description is Required
+                            </small>
+                            <small class="text-danger form-text"
+                                *ngIf="createProductFormGroup.controls['fullDescription'].errors?.['maxlength']">
+                                Full Description must be less than 4096 characters long.
+                            </small>
+                        </div>
+                        {{fullDescription}}
+                        <div class="col-md-10 mt-2">
+                            <quill-editor [styles]="{'height':'150px'}"
+                                formControlName="fullDescription"></quill-editor>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="tab-pane fade" id="nav-images" role="tabpanel" aria-labelledby="nav-images-tab">
+                    <!-- Main Image -->
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-group mb-3">
+                                <input type="file" class="form-control" id="inputGroupFile02" required
+                                    (change)="onMainImageSelected($event)">
+                                <label class="input-group-text" for="inputGroupFile02">Main Image</label>
+                            </div>
+                            <img width="150" height="150" [src]="mainImagePreveiw" *ngIf="mainImagePreveiw"
+                                class="img-fluid" />
+                                <small class="text-danger form-text" *ngIf="!mainImagePreveiw">
+                                    Main Image is required
+                                </small>
+                        </div>
+                    </div>
+
+                    <!-- Extra Images -->
+                    <div formArrayName="images" class="row mt-2">
+                        <ng-container *ngFor="let d of extraImages.controls; let i=index">
+                            <div class="col-md-4">
+                                <div [formGroupName]="i">
+                                    <div class="input-group mb-3">
+                                        <!-- Bind the file input to a form control named 'extraImage' -->
+                                        <input type="file" class="form-control" formControlName="extraImage"
+                                            (change)="onFileChange($event, i)" accept="image/*">
+                                        <button class="btn btn-sm btn-danger" (click)="deleteImage(i)">
+                                            <i class="fa-solid fa-trash-can"></i> Delete
+                                        </button>
+                                    </div>
+                                    <img *ngIf="imagesPreview && imagesPreview[i]" [src]="imagesPreview[i]"
+                                        class="img-fluid img-thumbnail" alt="Selected Image" width="120" height="120"/>
+                                        
+                                </div>
+                            </div>
+                            <!-- Close the row and start a new one after every third image -->
+                            <div class="clearfix" *ngIf="(i + 1) % 3 == 0"></div>
+                        </ng-container>
+                    </div>
+
+                    <!-- Button to add new image -->
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <a (click)="addImage()" style="cursor: pointer;" class="btn btn-sm btn-success">
+                                <i class="fa-solid fa-circle-plus"></i> Add Image
+                            </a>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                </div>
+                <div class="tab-pane fade" id="nav-details" role="tabpanel" aria-labelledby="nav-details-tab">
+                    <div class="" formArrayName="details">
+                        <div *ngFor="let item of details.controls; let i=index" [formGroupName]="i"
+                            style="display: flex; gap: 10px; align-items: center;" class="mb-3">
+                            <div class="col-md-5">
+                                <input type="text" class="form-control" formControlName="name" placeholder="Name">
+                            </div>
+                            <div class="col-md-5">
+                                <input type="text" class="form-control" formControlName="value" placeholder="Value">
+                            </div>
+                            <div *ngIf="i!=0">
+                                <button class="btn btn-sm btn-danger" (click)="deleteItem(i)"
+                                    style="height: 30px; padding: 5px;">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 ">
+
+                            <a (click)="addDetail()" style="cursor: pointer;" class="btn btn-sm btn-success">
+                                <i class="fa-solid fa-circle-plus  "></i>
+                                Add detail
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <h4></h4>
+                        </div>
+
+                    </div>
+
+
+                </div>
+                <div class="tab-pane fade" id="nav-shipping" role="tabpanel" aria-labelledby="nav-shipping-tab">
+                    <div class="form-group row  ">
+                        The following information is important to calculate shipping cost for the product.
+                        The dimensions (L X W X H) is for the box that is used to package the product - not the
+                        product's dimensions.
+                    </div>
+                    <div class="form-group row mt-2">
+                        <label class="col-sm-2 col-form-label">Length (inch) :</label>
+                        <div class="col-sm-10">
+                            <input type="number" step="0.01" class="form-control" formControlName="length" />
+                        </div>
+                    </div>
+                    <div class="form-group row mt-2">
+                        <label class="col-sm-2 col-form-label">Width (inch) :</label>
+                        <div class="col-sm-10 mt-2">
+                            <input type="number" step="0.01" class="form-control" formControlName="width" />
+                        </div>
+                    </div>
+                    <div class="form-group row mt-2">
+                        <label class="col-sm-2 col-form-label">Height (inch) :</label>
+                        <div class="col-sm-10">
+                            <input type="number" step="0.01" class="form-control" formControlName="height" />
+                        </div>
+                    </div>
+                    <div class="form-group row mt-2">
+                        <label class="col-sm-2 col-form-label">Weight (pounds) :</label>
+                        <div class="col-sm-10">
+                            <input type="number" step="0.01" class="form-control" formControlName="weight" />
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                <p><strong>This is some placeholder content the Profile tab's associated content.</strong>
-                    Clicking another tab will toggle the visibility of this one for the next.
-                    The tab JavaScript swaps classes to control the content visibility and styling. You can use it with
-                    tabs, pills, and any other <code>.nav</code>-powered navigation.</p>
-            </div>
-            <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                <p><strong>This is some placeholder content the Contact tab's associated content.</strong>
-                    Clicking another tab will toggle the visibility of this one for the next.
-                    The tab JavaScript swaps classes to control the content visibility and styling. You can use it with
-                    tabs, pills, and any other <code>.nav</code>-powered navigation.</p>
-            </div>
-        </div>
+
+
+
+            <button class="btn btn-success mt-2"
+                [disabled]="!createProductFormGroup.valid || !createProductFormGroup.value.category || !createProductFormGroup.value.brand || !mainImagePreveiw">Create</button>
+        </form>
     </div>
 </div>

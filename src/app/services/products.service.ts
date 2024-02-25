@@ -36,4 +36,14 @@ export class ProductsService {
     return this.http.get(`${environments.API_URL}${environments.PRODUCTS_ENDPOINT}/${id}/image`,{ responseType: 'blob', headers: headers });
   }
 
+
+  public createProduct(product:Product):Observable<Product>{
+    return this.http.post<Product>(`${environments.API_URL}${environments.PRODUCTS_ENDPOINT}`,product);
+  }
+
+
+  public uploadProductMainImage(id:number, formData:FormData){
+    return this.http.post<any>(`${environments.API_URL}${environments.PRODUCTS_ENDPOINT}/${id}/upload-main-image`,formData);
+  }
+
 }
