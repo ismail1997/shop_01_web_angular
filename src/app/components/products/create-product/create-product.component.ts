@@ -9,6 +9,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { EditorChangeContent, EditorChangeSelection } from 'ngx-quill';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from '../../../models/user.model';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -64,7 +65,8 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     private categoryService: CategoriesService,
     private brandService: BrandsService,
     private productService: ProductsService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router : Router
   ) { }
 
 
@@ -138,7 +140,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     this.fullDescription = event.editor.getSemanticHTML();
   }
 
-
+ 
 
 
 
@@ -295,7 +297,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
 
     this.submitProduct(product);
 
-
+    
   }
   submitProduct(product: Product) {
     this.productService.createProduct(product).pipe(takeUntil(this.unsubscribe$)).subscribe({
@@ -315,7 +317,20 @@ export class CreateProductComponent implements OnInit, OnDestroy {
             console.log(err)
           }
         })
-      }
+
+        this.productService.uploadProductExtrasImages(data.id,this.productImages).pipe(takeUntil(this.unsubscribe$)).subscribe({
+          next:data=>{
+            console.log(data);
+          },
+          error:err=>{
+            console.log(err)
+          }
+        })
+      },
+      error:error=>{
+        console.log(error)
+      },
+      complete:()=>this.router.navigateByUrl("/admin/products?message=Product%20Created%20Successfully")
     })
   }
 }

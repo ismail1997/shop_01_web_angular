@@ -46,4 +46,12 @@ export class ProductsService {
     return this.http.post<any>(`${environments.API_URL}${environments.PRODUCTS_ENDPOINT}/${id}/upload-main-image`,formData);
   }
 
+  public uploadProductExtrasImages(id:number,files:File[]):Observable<any>{
+    const formData = new FormData();
+    files.forEach((file,index)=>{
+      formData.append("files",file,file.name);
+    })
+    return this.http.post<any>(`${environments.API_URL}${environments.PRODUCTS_ENDPOINT}/${id}/upload-extras-images`,formData);
+  }
+
 }
