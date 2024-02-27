@@ -1,0 +1,108 @@
+<div class="card p-3 shadow d-flex  bg-light" *ngIf="product">
+    <div class="card-header">
+        <h2 class="text-center p-3">{{product.name}}</h2>
+
+    </div>
+    <div class="card-body">
+        <nav>
+            <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                <button class="nav-link active" id="nav-overview-tab" data-bs-toggle="tab"
+                    data-bs-target="#nav-overview" type="button" role="tab" aria-controls="nav-overview"
+                    aria-selected="true">Overview</button>
+                <button class="nav-link" id="nav-description-tab" data-bs-toggle="tab" data-bs-target="#nav-description"
+                    type="button" role="tab" aria-controls="nav-description" aria-selected="false">Description</button>
+                <button class="nav-link" id="nav-images-tab" data-bs-toggle="tab" data-bs-target="#nav-images"
+                    type="button" role="tab" aria-controls="nav-images" aria-selected="false">Images</button>
+                <button class="nav-link" id="nav-details-tab" data-bs-toggle="tab" data-bs-target="#nav-details"
+                    type="button" role="tab" aria-controls="nav-details" aria-selected="false">Details</button>
+                <button class="nav-link" id="nav-shipping-tab" data-bs-toggle="tab" data-bs-target="#nav-shipping"
+                    type="button" role="tab" aria-controls="nav-shipping" aria-selected="false">Shipping</button>
+            </div>
+        </nav>
+        <div class="tab-content p-3 border bg-light" id="nav-tabContent">
+            <div class="tab-pane fade active show" id="nav-overview" role="tabpanel" aria-labelledby="nav-overview-tab">
+                <div class="row">
+                    <div class="col-md-6 ">
+                        <label for="nameInput" class="form-label">Product Name</label>
+                        <input type="text" class="form-control" id="nameInput" [readonly]="true" [value]="product.name">
+
+                    </div>
+                    <div class="col-md-6">
+                        <label for="aliasInput" class="form-label">Alias</label>
+                        <input type="text" class="form-control" id="aliasInput" [readonly]="true"
+                            [value]="product.alias">
+
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <div class="mb-3">
+
+                            <label for="selectInput" class="form-label">Brand :</label>
+                            <input type="text" class="form-control" id="aliasInput" [readonly]="true"
+                                [value]="product.brand.name">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="selectInput" class="form-label">Category :</label>
+                        <input type="text" class="form-control" id="aliasInput" [readonly]="true"
+                            [value]="product.category.name">
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <label for="enabledInput" class="form-label">Enabled</label>
+                        <input type="checkbox" class="form-check-input ms-3" id="enabledInput"
+                            [checked]="product.enabled" disabled>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="inStockInput" class="form-label">In Stock</label>
+                        <input type="checkbox" class="form-check-input ms-3" id="inStockInput"
+                            [checked]="product.inStock" disabled>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <label for="costInput" class="form-label">Cost</label>
+                        <input type="number" class="form-control" id="costInput" [readonly]="true"
+                            [value]="product.cost">
+
+                    </div>
+                    <div class="col-md-6">
+                        <label for="priceInput" class="form-label">Price</label>
+                        <input type="number" class="form-control" id="priceInput" [readonly]="true"
+                            [value]="product.price">
+
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <label for="costInput" class="form-label">Discount Price</label>
+                        <input type="number" class="form-control" id="costInput" [readonly]="true"
+                            [value]="product.discountPercent">
+                    </div>
+                </div>
+                <!-- Repeat similar structure for other properties -->
+
+            </div>
+            <div class="tab-pane fade" id="nav-description" role="tabpanel" aria-labelledby="nav-description-tab">
+                <div class="form-group">
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Short Description :</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [readonly]="true"> {{product.shortDescription}}</textarea>
+                      </div>
+                    
+                </div>
+                <div class="form-group">
+                    <div class="mb-3">
+                        <label for="exampleFormControlTextarea1" class="form-label">Short Description :</label>
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" [readonly]="true"> {{product.fullDescription}}</textarea>
+                      </div>
+                    
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -10,6 +10,7 @@ import { BrandsComponent } from './components/brands/brands.component';
 import { CreateRoleComponent } from './components/roles/create-role/create-role.component';
 import { ProductsComponent } from './components/products/products.component';
 import { CreateProductComponent } from './components/products/create-product/create-product.component';
+import { ProductDetailsComponent } from './components/products/product-details/product-details.component';
 
 const routes: Routes = [
   {path:"" , redirectTo:"/admin" , pathMatch:"full"},
@@ -27,7 +28,8 @@ const routes: Routes = [
       {path:"brands", component:BrandsComponent},
 
       {path:"products", component:ProductsComponent},
-      {path:"create-product", component:CreateProductComponent}
+      {path:"create-product", component:CreateProductComponent},
+      {path:"product-details/:id", component:ProductDetailsComponent}
     ]
   }
 ];

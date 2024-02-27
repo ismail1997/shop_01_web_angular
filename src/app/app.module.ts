@@ -18,6 +18,7 @@ import { ProductsComponent } from './components/products/products.component';
 import { CreateProductComponent } from './components/products/create-product/create-product.component';
 import { QuillModule } from 'ngx-quill';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProductDetailsComponent } from './components/products/product-details/product-details.component';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     BrandsComponent,
     CreateRoleComponent,
     ProductsComponent,
-    CreateProductComponent
+    CreateProductComponent,
+    ProductDetailsComponent
   ],
   imports: [
     BrowserModule,

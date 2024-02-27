@@ -4,6 +4,7 @@ import { ProductPage } from '../../models/productpage.model';
 import { ProductsService } from '../../services/products.service';
 import { ImageLoadingService } from '../../services/image-loading.service';
 import { Product } from '../../models/product.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-products',
@@ -12,6 +13,7 @@ import { Product } from '../../models/product.model';
 })
 export class ProductsComponent implements OnInit, OnDestroy {
 
+
   private unsubscribe$ = new Subject<void>();
   public productsPage$!: Observable<ProductPage>;
   public currentPage: number = 0;
@@ -19,7 +21,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
 
 
-  constructor(private productService: ProductsService, public imageLoadingService: ImageLoadingService) { }
+  constructor(private productService: ProductsService, public imageLoadingService: ImageLoadingService,
+    private router : Router) { }
 
   ngOnInit(): void {
     this.getProductsPage();
@@ -60,5 +63,11 @@ export class ProductsComponent implements OnInit, OnDestroy {
         // Handle error as per your application's requirements
       }
     });
+  }
+
+
+
+  onGetProductDetails(productId: number) {
+    this.router.navigateByUrl("/admin/product-details/"+productId);
   }
 }
