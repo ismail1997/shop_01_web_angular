@@ -333,6 +333,11 @@ export class CreateProductComponent implements OnInit, OnDestroy {
       complete:()=>this.router.navigateByUrl("/admin/products?message=Product%20Created%20Successfully")
     })
   }
+
+
+  goBackToProductsPage(){
+    this.router.navigateByUrl("/admin/products")
+  }
 }
 
 
