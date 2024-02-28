@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { Product } from '../models/product.model';
 import { environments } from '../environment/environment';
 import { ProductPage } from '../models/productpage.model';
+import { ProductImage } from '../models/productimage.model';
+import { ProductDetail } from '../models/productdetails.model';
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +54,15 @@ export class ProductsService {
       formData.append("files",file,file.name);
     })
     return this.http.post<any>(`${environments.HOST}${environments.PRODUCTS_ENDPOINT}/${id}/upload-extras-images`,formData);
+  }
+
+
+  public getExtrasImages(id:number):Observable<Array<ProductImage>>{
+    return this.http.get<Array<ProductImage>>(`${environments.HOST}${environments.PRODUCTS_ENDPOINT}/${id}/extras-images`);
+  }
+
+  public getProductDetails(id:number):Observable<ProductDetail[]>{
+    return this.http.get<ProductDetail[]>(`${environments.HOST}${environments.PRODUCTS_ENDPOINT}/${id}/details`);
   }
 
 }

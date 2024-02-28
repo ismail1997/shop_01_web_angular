@@ -1,9 +1,10 @@
 <div class="card p-3 shadow d-flex  bg-light" *ngIf="product">
     <div class="card-header">
+        <button class="btn selective-blue go-back-button" (click)="goBackToProductsPage()"><i class="fa-solid fa-circle-left"></i> Back</button>
         <h2 class="text-center p-3">{{product.name}}</h2>
 
     </div>
-    <div class="card-body">
+    <div class="card-body mb-3">
         <nav>
             <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
                 <button class="nav-link active" id="nav-overview-tab" data-bs-toggle="tab"
@@ -89,20 +90,112 @@
                 <div class="form-group">
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Short Description :</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [readonly]="true"> {{product.shortDescription}}</textarea>
-                      </div>
-                    
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                            [readonly]="true"> {{product.shortDescription}}</textarea>
+                    </div>
+
                 </div>
                 <div class="form-group">
                     <div class="mb-3">
                         <label for="exampleFormControlTextarea1" class="form-label">Short Description :</label>
-                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" [readonly]="true"> {{product.fullDescription}}</textarea>
-                      </div>
-                    
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"
+                            [readonly]="true"> {{product.fullDescription}}</textarea>
+                    </div>
+
                 </div>
 
 
             </div>
+            <div class="tab-pane fade" id="nav-images" role="tabpanel" aria-labelledby="nav-images-tab">
+                <!-- Main Image -->
+                <div class="">
+                    <div class="row">
+                        <div class="col ">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6>Main Image : {{product.mainImage | trimImageExtension}}</h6>
+                                </div>
+                                <div class="card-body">
+                                    <img src="{{productsHost+'/'+product.id+'/image'}}"
+                                        alt="{{product.mainImage | trimImageExtension}}" width="200" height="200" />
+                                </div>
+                            </div>
+
+                        </div>
+                        <ng-container *ngIf="productImages  | async as images">
+                            <div class="col" *ngFor="let image of images; let i = index;">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h6>Extra Image {{i+1}} : {{image.name |trimImageExtension}}</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <img src="{{productsHost+'/'+product.id+'/extras-images/'+image.id}}"
+                                            alt="{{image.name |trimImageExtension}}" width="200" height="200" />
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="nav-details" role="tabpanel" aria-labelledby="nav-details-tab">
+                <div *ngIf="productDetails | async as details">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th width="40%">Name</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let detail of details; let i = index;">
+                                <td>{{detail.name}}</td>
+                                <td>{{detail.value}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                </div>
+
+            </div>
+            <div class="tab-pane fade" id="nav-shipping" role="tabpanel" aria-labelledby="nav-shipping-tab">
+                <div class="form-group row  ">
+                    The following information is important to calculate shipping cost for the product.
+                    The dimensions (L X W X H) is for the box that is used to package the product - not the
+                    product's dimensions.
+                </div>
+                <div class="form-group row mt-2">
+                    <label class="col-sm-2 col-form-label">Length (inch) :</label>
+                    <div class="col-sm-10">
+                        <input type="text" [readonly]="true" [value]="product.length" class="form-control" name="length" />
+                    </div>
+                </div>
+                <div class="form-group row mt-2">
+                    <label class="col-sm-2 col-form-label">Width (inch) :</label>
+                    <div class="col-sm-10 mt-2">
+                        <input type="text" [readonly]="true" [value]="product.width" class="form-control" name="width" />
+                    </div>
+                </div>
+                <div class="form-group row mt-2">
+                    <label class="col-sm-2 col-form-label">Height (inch) :</label>
+                    <div class="col-sm-10">
+                        <input type="text" [readonly]="true" [value]="product.height" class="form-control" name="height" />
+                    </div>
+                </div>
+                <div class="form-group row mt-2">
+                    <label class="col-sm-2 col-form-label">Weight (pounds) :</label>
+                    <div class="col-sm-10">
+                        <input type="text" [readonly]="true" [value]="product.weight" class="form-control" name="weight" />
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
         </div>
     </div>
 </div>
