@@ -2,7 +2,64 @@
 @import "@fortawesome/fontawesome-free/css/all.css";
 @import 'quill/dist/quill.snow.css';
 
-html, body {
+html,
+body {
+    background-color: #f0f0f0;
+    /* Adjust color as needed */
+}
+
+/**
+colors 
+*/
+.custom-blue {
+    background-color: hsl(210, 69%, 25%);
+}
+
+.custom-blue-2 {
+    background-color: hsl(210, 69%, 19%);
+}
+
+.custom-blue-3 {
+    background-color: hsl(210, 69%, 35%);
+}
+
+.custom-green {
+    background-color: #006600;
+}
+.custom-red {
+    background-color: #7C0A02;
+}
+.blue-text {
+    color: hsl(210, 69%, 19%);
+}
+.green-text{
+    color: #006600;
+}
+.red-text{
+    color: #7C0A02;
+}
+/*buttons */
+.custom-button {
+    color: #f0f0f0;
+}
+
+
+
+
+.custom-gray-white table,
+.custom-gray-white thead,
+.custom-gray-white tbody,
+.custom-gray-white tr,
+.custom-gray-white th,
+.custom-gray-white td {
+    background-color: #F1F2F3;/* Adjust color as needed */
+}
+
+.custom-gray-white,
+.custom-gray-white > * {
     background-color: #f0f0f0; /* Adjust color as needed */
 }
+
+
+
 

@@ -24,3 +24,34 @@
 .gray-whity-color > * {
     background-color: #f0f0f0; /* Adjust color as needed */
 }
+
+
+/**
+colors 
+*/
+.custom-blue {
+    background-color: hsl(210, 69%, 25%);
+}
+
+.custom-blue-2 {
+    background-color: hsl(210, 69%, 19%);
+}
+
+.custom-blue-3 {
+    background-color: hsl(210, 69%, 35%);
+}
+
+.custom-green {
+    background-color: #006600;
+}
+.custom-red {
+    background-color: #7C0A02;
+}
+.blue-text {
+    color: hsl(210, 69%, 19%);
+}
+/*buttons */
+.custom-button {
+    color: #f0f0f0;
+}
+
