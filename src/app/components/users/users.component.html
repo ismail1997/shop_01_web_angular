@@ -30,7 +30,7 @@
             <tbody *ngIf="userPage.userDTOS">
                 <tr *ngFor="let user of userPage.userDTOS">
                     <td class="text-center">{{user.id}}</td>
-                    <td><img class="img-fluid rounded-image " [src]="imagesToShow[user.id]" alt="User Image" alt=""></td>
+                    <td><img class="img-fluid rounded-image "  src ="{{usersHost+'/'+user.id+'/image'}}" alt="{{user.photos}}" alt=""></td>
                     <td>{{user.firstName}} {{user.lastName}}</td>
                     
                     <td>{{user.email}}</td>

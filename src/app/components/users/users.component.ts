@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subject, map, takeUntil } from 'rxjs';
 import { User } from '../../models/user.model';
 import { UserPage } from '../../models/userpage.model';
+import { environments } from '../../environment/environment';
 
 @Component({
   selector: 'app-users',
@@ -19,7 +20,9 @@ export class UsersComponent implements OnInit, OnDestroy {
   public currentPage: number = 0;
   public pageSize: number = 10;
 
-  imagesToShow: { [key: number]: string } = {};
+  public usersHost:string = environments.HOST+environments.USERS_ENDPOINT;
+
+  
 
   public message: string | null = null;
 
@@ -31,7 +34,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.showMessageOfCreation();
     this.getUsers();
-    this.getImagesForUsers();
+ 
   }
   ngOnDestroy(): void {
     this.unsubscribe$.next();
@@ -49,36 +52,13 @@ export class UsersComponent implements OnInit, OnDestroy {
   goToPage(page: number) {
     this.currentPage = page;
     this.getUsers();
-    this.imagesToShow = [];
-    this.getImagesForUsers();
+     
+ 
   }
 
-  getImagesForUsers(): void {
-    this.usersPage$.pipe(takeUntil(this.unsubscribe$)).subscribe({
-      next: data => {
-        data.userDTOS.forEach(user => {
-          this.usersService.getImageOfUser(user.id).pipe(takeUntil(this.unsubscribe$)).subscribe({
-            next: d => {
-              this.createImageFromBlob(d, user.id);
-            },
-            error: err => console.log(err)
-          })
-        })
-      },
-      error: err => console.log(err)
-    })
-  }
+ 
 
-  createImageFromBlob(image: Blob, userId: number): void {
-    const reader = new FileReader();
-    reader.addEventListener('load', () => {
-      this.imagesToShow[userId] = reader.result as string;
-    }, false);
-
-    if (image) {
-      reader.readAsDataURL(image);
-    }
-  }
+ 
 
   showMessageOfCreation() {
     this.route.queryParams.pipe(takeUntil(this.unsubscribe$)).subscribe(params => {

@@ -1,14 +1,14 @@
 export const environments={
-    API_URL :"http://localhost:8383/shop/api/v1",
+    HOST :"http://localhost:8383/shop/api/v1",
 
     /**
-     * users endpoints 
+     * users endpoints
      */
     USERS_ENDPOINT:"/users",
     USERS_PAGE_ENDPOINT:"/users/page-users",
     USERS_CHECK_EMAIL_UNIQUENESS:"/users/check-email-uniqueness",
     USERS_UPDATE_ENABLED_STATUS:"/change-enabled-status",
-    
+
     ROLES_ENDPOINT:"/roles",
     ROLES_CHECK_EXISTENCE_ENDPOINT:"/roles/check-existence",
 

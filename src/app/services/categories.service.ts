@@ -14,15 +14,15 @@ export class CategoriesService {
 
 
   public getAllCategories():Observable<Array<Category>>{
-    return this.http.get<Array<Category>>(`${environments.API_URL}${environments.CATEGORIES_ENDPOINT}`);
+    return this.http.get<Array<Category>>(`${environments.HOST}${environments.CATEGORIES_ENDPOINT}`);
   }
 
   public getCategoriesPage(page : number,size : number):Observable<CategoryPage>{
-    return this.http.get<CategoryPage>(`${environments.API_URL}${environments.CATEGORY_PAGE_ENDPOINT}?page=${page}&size=${size}`);
+    return this.http.get<CategoryPage>(`${environments.HOST}${environments.CATEGORY_PAGE_ENDPOINT}?page=${page}&size=${size}`);
   }
 
   public getCategoryByID(id:number):Observable<Category>{
-    return this.http.get<Category>(`${environments.API_URL}${environments.CATEGORIES_ENDPOINT}/${id}`);
+    return this.http.get<Category>(`${environments.HOST}${environments.CATEGORIES_ENDPOINT}/${id}`);
   }
 
   public getImageOfCategory(id:number) :Observable<Blob>{
@@ -30,6 +30,6 @@ export class CategoriesService {
       'Content-Type': 'image/jpeg', // Adjust content type as needed
       'Accept': 'image/jpeg' // Adjust accept type as needed
     });
-    return this.http.get(`${environments.API_URL}${environments.CATEGORIES_ENDPOINT}/${id}/image`,{ responseType: 'blob', headers: headers });
+    return this.http.get(`${environments.HOST}${environments.CATEGORIES_ENDPOINT}/${id}/image`,{ responseType: 'blob', headers: headers });
   }
 }

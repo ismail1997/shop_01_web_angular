@@ -13,18 +13,18 @@ export class ProductsService {
   constructor(private http:HttpClient) { }
 
   public getAllProducts():Observable<Array<Product>>{
-    let url =`${environments.API_URL}${environments.PRODUCTS_ENDPOINT}`;
+    let url =`${environments.HOST}${environments.PRODUCTS_ENDPOINT}`;
     return this.http.get<Array<Product>>(url);
   }
 
   public getPageOfProducts(page :number, size:number):Observable<ProductPage>{
-    let url = `${environments.API_URL}${environments.PRODCUTS_PAGE_ENDPOINT}?page=${page}&size=${size}`;
+    let url = `${environments.HOST}${environments.PRODCUTS_PAGE_ENDPOINT}?page=${page}&size=${size}`;
     return this.http.get<ProductPage>(url);
   }
 
   public getOneProductByID(id:number):Observable<Product>
   {
-    let url =`${environments.API_URL}${environments.PRODUCTS_ENDPOINT}/${id}`;
+    let url =`${environments.HOST}${environments.PRODUCTS_ENDPOINT}/${id}`;
     return this.http.get<Product>(url);
   }
 
@@ -33,17 +33,17 @@ export class ProductsService {
       'Content-Type': 'image/jpeg', // Adjust content type as needed
       'Accept': 'image/jpeg' // Adjust accept type as needed
     });
-    return this.http.get(`${environments.API_URL}${environments.PRODUCTS_ENDPOINT}/${id}/image`,{ responseType: 'blob', headers: headers });
+    return this.http.get(`${environments.HOST}${environments.PRODUCTS_ENDPOINT}/${id}/image`,{ responseType: 'blob', headers: headers });
   }
 
 
   public createProduct(product:Product):Observable<Product>{
-    return this.http.post<Product>(`${environments.API_URL}${environments.PRODUCTS_ENDPOINT}`,product);
+    return this.http.post<Product>(`${environments.HOST}${environments.PRODUCTS_ENDPOINT}`,product);
   }
 
 
   public uploadProductMainImage(id:number, formData:FormData){
-    return this.http.post<any>(`${environments.API_URL}${environments.PRODUCTS_ENDPOINT}/${id}/upload-main-image`,formData);
+    return this.http.post<any>(`${environments.HOST}${environments.PRODUCTS_ENDPOINT}/${id}/upload-main-image`,formData);
   }
 
   public uploadProductExtrasImages(id:number,files:File[]):Observable<any>{
@@ -51,7 +51,7 @@ export class ProductsService {
     files.forEach((file,index)=>{
       formData.append("files",file,file.name);
     })
-    return this.http.post<any>(`${environments.API_URL}${environments.PRODUCTS_ENDPOINT}/${id}/upload-extras-images`,formData);
+    return this.http.post<any>(`${environments.HOST}${environments.PRODUCTS_ENDPOINT}/${id}/upload-extras-images`,formData);
   }
 
 }

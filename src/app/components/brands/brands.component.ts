@@ -3,6 +3,7 @@ import { BrandsService } from '../../services/brands.service';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { BrandPage } from '../../models/brandpage.model';
 import { ImageLoadingService } from '../../services/image-loading.service';
+import {environments} from "../../environment/environment";
 
 @Component({
   selector: 'app-brands',
@@ -17,10 +18,15 @@ export class BrandsComponent implements OnInit,OnDestroy {
 
   private unsubscribe$ = new Subject<void>();
 
-  constructor(private brandService : BrandsService, public imageLoadingService:ImageLoadingService){}
+  public host : string ="";
+
+  constructor(private brandService : BrandsService){
+
+  }
 
   ngOnInit(): void {
      this.getPageOfBrands();
+     this.host=environments.HOST+environments.BRANDS_ENDPOINT;
   }
   ngOnDestroy(): void {
     this.unsubscribe$.next();
@@ -29,32 +35,15 @@ export class BrandsComponent implements OnInit,OnDestroy {
 
   getPageOfBrands(){
     this.brandsPage$ = this.brandService.getPageOfBrands(this.currentPage,this.pageSize);
-    this.getImageOfBrands();
   }
 
 
-  getImageOfBrands(){
-    this.brandsPage$.pipe(takeUntil(this.unsubscribe$)).subscribe({
-      next: data=>{
-        data.brandDTOS.forEach(brand=>{
-          this.brandService.getImageOfBrand(brand.id).pipe(takeUntil(this.unsubscribe$)).subscribe({
-            next: d =>{
-              this.imageLoadingService.createImageFromBlob(d,brand.id);
-            },
-            error:err=>console.log(err)
-          })
-        })
-      },
-      error:error=>console.log(error)
-    })
-  }
+ 
 
 
   goToPage(page:number){
     this.currentPage=page;
     this.getPageOfBrands();
-    this.imageLoadingService.imagesToShow=[];
-    this.getImageOfBrands();
   }
 
 

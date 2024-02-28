@@ -15,15 +15,15 @@ export class BrandsService {
 
 
   public getAllBrands():Observable<Array<Brand>>{
-    return this.http.get<Array<Brand>>(`${environments.API_URL}${environments.BRANDS_ENDPOINT}`);
+    return this.http.get<Array<Brand>>(`${environments.HOST}${environments.BRANDS_ENDPOINT}`);
   }
 
   public getPageOfBrands(page :number, size:number):Observable<BrandPage>{
-    return this.http.get<BrandPage>(`${environments.API_URL}${environments.BRANDS_PAGE_ENDPOINT}?page=${page}&size=${size}`);
+    return this.http.get<BrandPage>(`${environments.HOST}${environments.BRANDS_PAGE_ENDPOINT}?page=${page}&size=${size}`);
   }
 
   public getOneBrandByID(id:number):Observable<Brand>{
-    return this.http.get<Brand>(`${environments.API_URL}${environments.BRANDS_ENDPOINT}/${id}`);
+    return this.http.get<Brand>(`${environments.HOST}${environments.BRANDS_ENDPOINT}/${id}`);
   }
 
   /**
@@ -32,7 +32,7 @@ export class BrandsService {
    * @returns  Observable of Array of categories
    */
   public getCategoriesOfBrand(id:number) : Observable<Array<Category>>{
-    return this.http.get<Array<Category>>(`${environments.API_URL}${environments.BRANDS_ENDPOINT}/${id}/categories`);
+    return this.http.get<Array<Category>>(`${environments.HOST}${environments.BRANDS_ENDPOINT}/${id}/categories`);
   }
 
   public getImageOfBrand(id:number) :Observable<Blob>{
@@ -40,7 +40,7 @@ export class BrandsService {
       'Content-Type': 'image/jpeg', // Adjust content type as needed
       'Accept': 'image/jpeg' // Adjust accept type as needed
     });
-    return this.http.get(`${environments.API_URL}${environments.BRANDS_ENDPOINT}/${id}/image`,{ responseType: 'blob', headers: headers });
+    return this.http.get(`${environments.HOST}${environments.BRANDS_ENDPOINT}/${id}/image`,{ responseType: 'blob', headers: headers });
   }
 
 }

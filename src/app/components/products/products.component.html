@@ -24,7 +24,7 @@
         <tbody>
           <tr *ngFor="let p of productsPage.productDTOS">
             <td>{{ p.id }}</td>
-            <td><img [src]="imageLoadingService.imagesToShow[p.id]" alt="Product Image" class="img-fluid product-image"></td>
+            <td><img src="{{productsHost+'/'+p.id+'/image'}}" alt="Product Image" class="img-fluid product-image"></td>
             <td>{{ p.alias }}</td>
             <td>{{p.brand.name}}</td>
             <td>{{p.category.name}}</td>

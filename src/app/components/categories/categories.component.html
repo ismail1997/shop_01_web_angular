@@ -15,7 +15,7 @@
                 <div class="m-2 myCard" *ngFor="let cat  of categoriesPage.categoryDTOS">
                    <div class=""> 
                         <div class="card-body">
-                            <td><img class="img-fluid rounded-image " [src]="imagesToShow[cat.id]" alt="Cat Image" alt=""></td>
+                            <td><img class="img-fluid rounded-image " src="{{categoriesHost+'/'+cat.id+'/image'}}" alt="{{cat.image}}" alt=""></td>
                             <h5>{{cat.name}}</h5>
                             <h6>{{cat.alias}}</h6>
                         </div>

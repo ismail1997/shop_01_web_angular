@@ -65,7 +65,7 @@
                             && createProductFormGroup.controls['brand'].errors!['required']">
                                     Alias is Required
                                 </small>
-                                <label for="selectInput" class="form-label">Select a brand :</label>
+                                <label for="selectInput1" class="form-label">Select a brand :</label>
                                 <select id="selectInput1" class="form-select" (change)="onBrandSelected($event)"
                                     formControlName="brand">
                                     <option disabled selected>Select a brand</option>
@@ -74,7 +74,7 @@
                             </div>
                         </div>
                         <div class="col-md-6" *ngIf="categories">
-                            <label for="selectInput" class="form-label">Select a category :</label>
+                            <label for="selectInput2" class="form-label">Select a category :</label>
                             <select id="selectInput2" class="form-select" formControlName="category">
                                 <option *ngFor="let c of categories" [value]="c.id">{{ c.name }}</option>
                             </select>
@@ -198,7 +198,7 @@
                                     </div>
                                     <img *ngIf="imagesPreview && imagesPreview[i]" [src]="imagesPreview[i]"
                                         class="img-fluid img-thumbnail" alt="Selected Image" width="120" height="120"/>
-                                        
+
                                 </div>
                             </div>
                             <!-- Close the row and start a new one after every third image -->

@@ -13,15 +13,15 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Logo</th>
+                    <th>Logo</th> 
                     <th>Name</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody *ngFor="let b of brandPage.brandDTOS">
                 <tr>
-                    <td>{{b.id}}</td>
-                    <td><img [src]="imageLoadingService.imagesToShow[b.id]" alt="Brand Image" class="img-fluid brand-image"></td>
+                    <td>{{b.id}}</td> 
+                    <td><img alt="{{b.logo}}" src="{{host +'/'+ b.id +'/image'}}" class="img-fluid brand-image"/></td>
                     <td>{{b.name}}</td>
                     <td>
                         <button class="btn btn-sm btn-warning me-2">Edit</button>
