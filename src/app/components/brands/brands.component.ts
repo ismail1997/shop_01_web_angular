@@ -14,7 +14,7 @@ export class BrandsComponent implements OnInit,OnDestroy {
 
   public brandsPage$ !: Observable<BrandPage>;
   public currentPage : number = 0;
-  public pageSize : number =5;
+  public pageSize : number =8;
 
   private unsubscribe$ = new Subject<void>();
 
