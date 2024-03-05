@@ -1,55 +1,42 @@
 <div class="card p-3 shadow d-flex   gray-whity-color " *ngIf="brandsPage$ |async as brandPage ">
     <div class="card-header  d-flex justify-content-between align-items-center">
-        <h3 class="mb-0">Manage Brands</h3>
+        <h3 class="mb-0 blue-text">Manage Brands</h3>
         <div>
-            <button class="btn btn-success" routerLink="/admin/create-user"><i class="bi bi-person-fill-add h5"></i></button>
-            <button class="btn btn-secondary ms-2"><i class="bi bi-filetype-csv h5"></i></button>
-            <button class="btn btn-secondary ms-2"><i class="bi bi-file-earmark-excel-fill h5"></i></button>
-            <button class="btn btn-secondary ms-2"><i class="bi bi-file-earmark-pdf-fill h5"></i></button>
+            <button class="custom-blue custom-button btn btn-sm" routerLink="/admin/create-user"><i
+                    class="bi bi-person-fill-add "></i> Add Brand</button>
+            <button class="btn btn-sm custom-green custom-button ms-2"><i class="bi bi-filetype-csv "></i> Export
+                csv</button>
+            <button class="btn btn-sm custom-green custom-button ms-2"><i class="fa-sharp fa-regular fa-file-excel"></i>
+                Export excel</button>
+            <button class="btn btn-sm custom-red custom-button ms-2"><i class="fa-sharp fa-solid fa-file-pdf"></i>
+                Export pdf</button>
+
         </div>
     </div>
     <div class="card-body gray-whity-color" *ngIf="brandPage.brandDTOS">
-        <div class="row justify-content-center">
-            <div *ngFor="let b of brandPage.brandDTOS" class="col-md-3">
-                <!-- <div class="card mb-3" style="width: 18rem;">
-                     Set object-fit property to 'cover' or 'contain' to make the image fit inside the card -->
-                    <!--<img alt="{{b.logo}}" src="{{host +'/'+ b.id +'/image'}}" class="img-fluid" style="object-fit: cover;">
-                    <div class="card-body d-flex flex-column justify-content-between">
-                        <h5 class="card-title">{{b.name}}</h5>
-                        <p class="card-text"></p>
-                        <div class="d-flex justify-content-between">
-                            <button class="btn btn-sm btn-success">Edit</button>
-                            <button class="btn btn-sm btn-success">Edit</button>
-                        </div>
+
+
+        <div class="container d-flex flex-wrap align-items-center">
+            <div class="m-2 myCard" *ngFor="let b of brandPage.brandDTOS">
+                <div class="">
+                    <div class="card-body">
+                        <td><img class="img-fluid rounded-image " src="{{host+'/'+b.id+'/image'}}" alt="{{b.logo}}"
+                                alt=""></td>
+                        <h5>{{b.name}}</h5>
+
                     </div>
                 </div>
-            -->
-                <div class="" style="margin-top: 40px; padding:10px;">
-                    <div class=" discount d-flex flex-column align-items-center justify-content-center text-center p-3" style="border: 1px solid red;">
-                        <div class="brand_image">
-                            <img alt="{{b.logo}}" src="{{host +'/'+ b.id +'/image'}}" >
-                         </div>
-                        <div class="text-center">
-                            <div class="">{{b.name}}</div>
-                            <div class="">
-                                <button class="btn btn-sm btn-success">edit</button>
-                                <button class="btn btn-sm ms-3 btn-danger">delete</button>
-                            </div>
-                        </div>
-                        <hr style="width: auto;"/>
-                    </div>
-                </div>
-               
+
             </div>
         </div>
-        
-      
+
+
     </div>
     <div class="card-footer gray-whity-color">
         <ul class="nav mt-2">
             <li *ngFor="let item of [].constructor(brandPage.totalPages); let page=index;">
-                <a [ngClass]="page==currentPage ? 'btn btn-primary' :'btn btn-secondary'"
-                    (click)="goToPage(page)" class="nav-link" class="ms-2">{{page +1}}</a>
+                <a [ngClass]="page==currentPage ? 'btn custom-blue custom-button' :'btn btn-secondary'" (click)="goToPage(page)"
+                    class="nav-link" class="ms-2">{{page +1}}</a>
             </li>
         </ul>
     </div>

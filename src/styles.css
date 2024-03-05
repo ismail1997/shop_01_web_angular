@@ -4,7 +4,7 @@
 
 html,
 body {
-    background-color: #f0f0f0;
+    background-color: #f0f0f0 !important;
     /* Adjust color as needed */
 }
 
@@ -12,35 +12,35 @@ body {
 colors 
 */
 .custom-blue {
-    background-color: hsl(210, 69%, 25%);
+    background-color: hsl(210, 69%, 25%) !important;
 }
 
 .custom-blue-2 {
-    background-color: hsl(210, 69%, 19%);
+    background-color: hsl(210, 69%, 19%) !important;
 }
 
 .custom-blue-3 {
-    background-color: hsl(210, 69%, 35%);
+    background-color: hsl(210, 69%, 35%) !important;
 }
 
 .custom-green {
-    background-color: #006600;
+    background-color: #006600 !important;
 }
 .custom-red {
-    background-color: #7C0A02;
+    background-color: #7C0A02 !important;
 }
 .blue-text {
     color: hsl(210, 69%, 19%);
 }
 .green-text{
-    color: #006600;
+    color: #006600 !important;
 }
 .red-text{
-    color: #7C0A02;
+    color: #7C0A02 !important;
 }
 /*buttons */
 .custom-button {
-    color: #f0f0f0;
+    color: #f0f0f0 !important;
 }
 
 

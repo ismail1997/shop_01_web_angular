@@ -3,22 +3,20 @@
     height: 100px;
 }
 
-.bbb_viewed_item.discount .item_discount
-{
-    display: inline-block;
-}
-.bbb_viewed_item.is_new .item_new
-{
+.bbb_viewed_item.discount .item_discount {
     display: inline-block;
 }
 
-.brand_image
-{
+.bbb_viewed_item.is_new .item_new {
+    display: inline-block;
+}
+
+.brand_image {
     width: 115px;
     height: 115px;
 }
-.brand_image img
-{
+
+.brand_image img {
     display: block;
     max-width: 100%;
 }
@@ -31,10 +29,47 @@
 .gray-whity-color tr,
 .gray-whity-color th,
 .gray-whity-color td {
-    background-color: #F1F2F3;/* Adjust color as needed */
+    background-color: #F1F2F3;
+    /* Adjust color as needed */
 }
 
 .gray-whity-color,
-.gray-whity-color > * {
-    background-color: #f0f0f0; /* Adjust color as needed */
+.gray-whity-color>* {
+    background-color: #f0f0f0;
+    /* Adjust color as needed */
+}
+
+
+
+
+
+
+
+/* get it from */
+.myCard {
+    border-radius: 8px;
+    border: 1px solid #cccccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    box-sizing: border-box;
+    width: 200px;
+    height: 200px;
+    transition: all linear 200ms;
+}
+
+.myCard:hover {
+    transform: scale(1.1);
+    transition: all linear 200ms;
+    z-index: 1;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, .3);
+    cursor: pointer;
+}
+
+.rounded-image {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
 }
