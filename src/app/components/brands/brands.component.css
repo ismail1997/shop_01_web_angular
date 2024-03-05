@@ -29,13 +29,13 @@
 .gray-whity-color tr,
 .gray-whity-color th,
 .gray-whity-color td {
-    background-color: #F1F2F3;
+    background-color: #F1F2F3 !important;
     /* Adjust color as needed */
 }
 
 .gray-whity-color,
 .gray-whity-color>* {
-    background-color: #f0f0f0;
+    background-color: #f0f0f0 !important;
     /* Adjust color as needed */
 }
 

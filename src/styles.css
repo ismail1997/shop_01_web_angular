@@ -30,8 +30,12 @@ colors
     background-color: #7C0A02 !important;
 }
 
-.custom-yellow{
+.custom-orange{
     background-color: #f8990a !important;
+}
+
+.custom-gold{
+    background-color: #FFD700 !important;
 }
 
 
@@ -49,6 +53,10 @@ colors
     color: #f0f0f0 !important;
 }
 
+.black-text{
+    color:#232121 !important;
+}
+
 
 
 
@@ -58,12 +66,12 @@ colors
 .custom-gray-white tr,
 .custom-gray-white th,
 .custom-gray-white td {
-    background-color: #F1F2F3;/* Adjust color as needed */
+    background-color: #F1F2F3 !important;/* Adjust color as needed */
 }
 
 .custom-gray-white,
 .custom-gray-white > * {
-    background-color: #f0f0f0; /* Adjust color as needed */
+    background-color: #f0f0f0 !important; /* Adjust color as needed */
 }
 
 
