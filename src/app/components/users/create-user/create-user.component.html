@@ -1,7 +1,11 @@
 <div class="container">
-    <div class="card">
-        <div class="card-header text-bg-dark d-flex justify-content-between align-items-center">Create User
-            <small *ngIf="emailExisted" class="alert alert-danger">Email Already Existed</small>
+    <div class="">
+        <div *ngIf="emailExisted" class="alert custom-alert-danger white-text">Email Already Existed</div>
+    </div>
+    <div class="card  shadow d-flex   gray-whity-color">
+        <div class="card-header">
+            <button class="btn btn-sm custom-blue custom-button" (click)="goToUsers()"><i class="fa-solid fa-circle-left"></i> Back</button>
+            <h2 class="text-center p-2" style="color:hsl(210, 69%, 19%)">Add New User</h2>
         </div>
         <div class="card-body">
             <form (ngSubmit)="submitForm()" [formGroup]="createUserForm">

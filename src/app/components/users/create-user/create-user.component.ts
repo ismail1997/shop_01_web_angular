@@ -201,6 +201,10 @@ export class CreateUserComponent implements OnInit,OnDestroy{
   }
 
   handleCancel(){
+    this.goToUsers();
+  }
+
+  goToUsers(){
     this.router.navigateByUrl("/admin/users");
   }
 

@@ -1,10 +1,24 @@
-.rounded-image {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    -webkit-border-radius: 50%;
+.profile-image {
+    max-width: 230px;
+    max-height: 300px;
+    
 }
 
 .clickable{
     cursor: pointer;
+}
+
+
+.custom-gray-white table,
+.custom-gray-white thead,
+.custom-gray-white tbody,
+.custom-gray-white tr,
+.custom-gray-white th,
+.custom-gray-white td {
+    background-color: #F1F2F3 !important;/* Adjust color as needed */
+}
+
+.custom-gray-white,
+.custom-gray-white > * {
+    background-color: #f0f0f0 !important; /* Adjust color as needed */
 }
