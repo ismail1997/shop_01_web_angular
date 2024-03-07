@@ -1,0 +1,14 @@
+
+.gray-whity-color table,
+.gray-whity-color thead,
+.gray-whity-color tbody,
+.gray-whity-color tr,
+.gray-whity-color th,
+.gray-whity-color td {
+    background-color: #F1F2F3;/* Adjust color as needed */
+}
+
+.gray-whity-color,
+.gray-whity-color > * {
+    background-color: #f0f0f0; /* Adjust color as needed */
+}

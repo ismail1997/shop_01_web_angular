@@ -12,6 +12,7 @@ import { Subject, takeUntil } from 'rxjs';
 export class CreateRoleComponent implements OnInit, OnDestroy{
 
 
+
   public createRoleFromGroup!: FormGroup;
   public roleExist : boolean =false;
   private unsubscribe$ = new Subject<void>();
@@ -65,6 +66,10 @@ export class CreateRoleComponent implements OnInit, OnDestroy{
   }
 
   onCancelButton() {
+   this.goBackToRolesPage();
+  }
+
+  goBackToRolesPage() {
     this.router.navigateByUrl("/admin/roles");
   }
 

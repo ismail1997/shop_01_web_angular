@@ -46,7 +46,7 @@
                             <span class="badge custom-red">No Role</span>
                         </ng-template>
                     </td>
-                    <td><button class="btn btn-sm" (click)="changeUserStatus(user.id,user.enabled)"><i [ngClass]="user.enabled ==true ? 'bi bi-check-circle-fill red-text h5' : 'bi bi-circle-fill text-secondary h5'"></i></button></td>
+                    <td><button class="btn btn-sm" (click)="changeUserStatus(user.id,user.enabled)"><i [ngClass]="user.enabled ==true ? 'bi bi-check-circle-fill green-text h5' : 'bi bi-circle-fill text-secondary h5'"></i></button></td>
                     <td>
                         <button class="btn btn-sm custom-blue custom-button" (click)="onGetUserDetails(user.id)"><i class="bi bi-list"></i>Details</button>
                     </td>

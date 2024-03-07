@@ -38,6 +38,9 @@ colors
     background-color: #FFD700 !important;
 }
 
+.custom-alert-danger{
+    background-color:  #FD0E35 !important;
+}
 
 .blue-text {
     color: hsl(210, 69%, 19%);
@@ -48,6 +51,11 @@ colors
 .red-text{
     color: #7C0A02 !important;
 }
+
+.white-text{
+    color: #f0f0f0 !important;
+}
+
 /*buttons */
 .custom-button {
     color: #f0f0f0 !important;
