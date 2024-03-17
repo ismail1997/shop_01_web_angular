@@ -16,27 +16,14 @@ export class CreateUserComponent implements OnInit,OnDestroy{
 
 
 
-  public roles !:Observable<Role[]>;
+  public roles$ !:Observable<Role[]>;
+  public listRoles : Role[] = [];
   public createUserForm !: FormGroup;
-  public user: User = {
-    firstName: '',
-    lastName: '',
-    email: '',
-    address: '',
-    postalCode: '',
-    password: '',
-    city: '',
-    enabled: false,
-    roles: [] // Assuming roles is an array of roles
-    ,
-    id: 0,
-    photos: '',
-    country: ''
-  };
+  
 
   public emailExisted : boolean =false;
 
-  public selectedRoles! : Role[];
+  public selectedRoles: Role[] = [];
 
   maxSizeInBytes: number = 500 * 1024; // 500 KB
   errorMessage: string | null = null;
@@ -67,62 +54,60 @@ export class CreateUserComponent implements OnInit,OnDestroy{
 
 
   getRoles(){
-    this.roles=this.roleService.getAllRoles();
+    this.roles$=this.roleService.getAllRoles();
   }
 
   creatForm(){
     
     this.createUserForm=this.fb.group({
-      firstName:[this.user.firstName,[Validators.required,Validators.minLength(5),Validators.maxLength(15)]],
+      firstName:[null,[Validators.required,Validators.minLength(5),Validators.maxLength(15)]],
 
-      lastName:[this.user.lastName,[Validators.required,Validators.minLength(5),Validators.maxLength(15)]],
+      lastName:[null,[Validators.required,Validators.minLength(5),Validators.maxLength(15)]],
 
-      email:[this.user.email,[Validators.required,Validators.email,Validators.maxLength(128)]],
+      email:[null,[Validators.required,Validators.email,Validators.maxLength(128)]],
 
-      address:[this.user.address,[Validators.maxLength(255)]],
+      address:[null,[Validators.maxLength(255)]],
 
-      postalCode:[this.user.postalCode,[Validators.required,Validators.minLength(5),Validators.maxLength(10)]],
+      postalCode:[null,[Validators.required,Validators.minLength(5),Validators.maxLength(10)]],
 
-      password:[this.user.country,[Validators.required,Validators.minLength(6),Validators.maxLength(25)]],
+      password:[null,[Validators.required,Validators.minLength(6),Validators.maxLength(25)]],
 
-      city:[this.user.city,[Validators.required,Validators.minLength(3),Validators.maxLength(25)]],
+      city:[null,[Validators.required,Validators.minLength(3),Validators.maxLength(25)]],
 
-      country:[this.user.city,[Validators.required,Validators.minLength(3),Validators.maxLength(25)]],
+      country:[null,[Validators.required,Validators.minLength(3),Validators.maxLength(25)]],
 
-      enabled:[this.user.enabled,false],
+      enabled:[null,false],
 
-      roles: this.fb.array(this.user.roles.map(role => this.fb.group({
-        id: [role.id],
-        name: [role.name],
-        description: [role.description]
-      })))
+      roles: this.fb.array([])
     })
   }
 
-  submitForm(){
-    console.log(this.selectedRoles);
-    this.user = this.createUserForm.value;
+  submitForm():void{
+    const user : User = this.createUserForm.value;
+    
     if(this.selectedRoles){
-      this.user.roles=this.selectedRoles;
+      user.roles=this.selectedRoles;
     }
-    console.log(this.user);
 
-    this.userService.createUser(this.user).pipe(takeUntil(this.unsubscribe$)).subscribe({
-      next:data=>{
-        const savedUser : User = data;
+
+    this.userService.createUser(user)
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe({
+      next:(data : User)=>{
+        
         const formData = new FormData();
         if(this.selectedImageFile){
           formData.append('image', this.selectedImageFile);
         }
         
-        this.userService.uploadImage(savedUser.id,formData).pipe(takeUntil(this.unsubscribe$)).subscribe({
+        this.userService.uploadImage(data.id,formData).pipe(takeUntil(this.unsubscribe$)).subscribe({
           next:(d)=>{
-           console.log(d)
+           
           },
           error:err=>console.log(err),
         })
 
-        //this.router.navigateByUrl("/admin/users?message=User%20Created%20Successfully");
+        this.router.navigateByUrl("/admin/users?message=User%20Created%20Successfully");
       },
       error:err=>{
         console.log(err);
@@ -131,10 +116,12 @@ export class CreateUserComponent implements OnInit,OnDestroy{
 
   }
 
-  onRoleCheckBoxChange($event:any) {
+  onRoleCheckBoxChange($event:any):void {
+
+    console.log($event?.target.value);
+    /*
     const checkArray: FormArray = this.createUserForm.get('roles') as FormArray;
     if ($event.target.checked) {
-      console.log($event.target.value)
       checkArray.push(new FormControl($event.target.value));
     } else {
       let i: number = 0;
@@ -147,7 +134,7 @@ export class CreateUserComponent implements OnInit,OnDestroy{
       });
     }
     this.selectedRoles = [];
-    this.roles.pipe(takeUntil(this.unsubscribe$)).subscribe({
+    this.roles$.pipe(takeUntil(this.unsubscribe$)).subscribe({
       next:data=>{
         
         checkArray.value.forEach((id:any)=>{
@@ -158,10 +145,11 @@ export class CreateUserComponent implements OnInit,OnDestroy{
         })
       }
     })
+    */
   }
 
 
-  checkIfEmailExistedOrNot() {
+  checkIfEmailExistedOrNot():void {
     const email = this.createUserForm.value.email;
     if(!email.trim()){
       this.emailExisted=false;
@@ -174,7 +162,7 @@ export class CreateUserComponent implements OnInit,OnDestroy{
     })
   }
 
-  onFileSelected(event: Event) {
+  onFileSelected(event: Event):void {
     const inputElement = event.target as HTMLInputElement;
     if (inputElement.files && inputElement.files.length > 0) {
       const file = inputElement.files[0];
@@ -200,11 +188,11 @@ export class CreateUserComponent implements OnInit,OnDestroy{
     reader.readAsDataURL(file);
   }
 
-  handleCancel(){
+  handleCancel():void{
     this.goToUsers();
   }
 
-  goToUsers(){
+  goToUsers():void{
     this.router.navigateByUrl("/admin/users");
   }
 
