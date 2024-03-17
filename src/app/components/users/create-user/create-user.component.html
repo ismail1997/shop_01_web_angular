@@ -171,8 +171,8 @@
                         <div class="form-group mt-3">
                             <h5>Roles</h5>
                             
-                            <ng-container *ngIf="roles$ | async as roles" class="mt-2">
-                                <div *ngFor="let role of roles" class="row form-check ms-1">
+                            <ng-container *ngIf="listRoles" class="mt-2">
+                                <div *ngFor="let role of listRoles" class="row form-check ms-1">
                                     <input class="col-sm-3 form-check-input" type="checkbox" [value]="role.id"
                                         [name]="role.name" (change)="onRoleCheckBoxChange($event)" />
                                     <label class="col-sm-4 form-check-label">{{ role.name }}</label>

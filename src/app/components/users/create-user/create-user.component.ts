@@ -18,6 +18,7 @@ export class CreateUserComponent implements OnInit,OnDestroy{
 
   public roles$ !:Observable<Role[]>;
   public listRoles : Role[] = [];
+  public idOfSelectedRoles: number[] = []
   public createUserForm !: FormGroup;
   
 
@@ -54,7 +55,15 @@ export class CreateUserComponent implements OnInit,OnDestroy{
 
 
   getRoles(){
-    this.roles$=this.roleService.getAllRoles();
+    this.roleService.getAllRoles().pipe(takeUntil(this.unsubscribe$)).subscribe({
+      next:data=>{
+        this.listRoles=data;
+      },
+      error:error=>{
+        //TODO: handle the errors 
+        console.log("Couldn't retreive roles "); 
+      },
+    });
   }
 
   creatForm(){
@@ -87,6 +96,7 @@ export class CreateUserComponent implements OnInit,OnDestroy{
     
     if(this.selectedRoles){
       user.roles=this.selectedRoles;
+      console.log("stop watching porn ismail or you will go to hell1");
     }
 
 
@@ -118,34 +128,23 @@ export class CreateUserComponent implements OnInit,OnDestroy{
 
   onRoleCheckBoxChange($event:any):void {
 
-    console.log($event?.target.value);
-    /*
-    const checkArray: FormArray = this.createUserForm.get('roles') as FormArray;
-    if ($event.target.checked) {
-      checkArray.push(new FormControl($event.target.value));
-    } else {
-      let i: number = 0;
-      checkArray.controls.forEach((item: any) => {
-        if (item.value == $event.target.value) {
-          checkArray.removeAt(i);
-          return;
-        }
-        i++;
-      });
+    let idOfRole = $event?.target.value;
+
+    if($event.target.checked){
+      this.idOfSelectedRoles.push(idOfRole);
+    }else{
+      this.idOfSelectedRoles=this.idOfSelectedRoles.filter(num=>num!== idOfRole);
     }
-    this.selectedRoles = [];
-    this.roles$.pipe(takeUntil(this.unsubscribe$)).subscribe({
-      next:data=>{
-        
-        checkArray.value.forEach((id:any)=>{
-          const role = data.find(rl=>rl.id===parseInt(id));
-          if(role){
-            this.selectedRoles.push(role);
-          }
-        })
+    
+    this.selectedRoles=[];
+    this.idOfSelectedRoles.forEach(data=>{
+      
+      const role : Role | undefined = this.listRoles.find(rl=>rl.id==data);
+      if(role){
+        this.selectedRoles.push(role);
       }
-    })
-    */
+    });    
+    
   }
 
 
@@ -163,6 +162,7 @@ export class CreateUserComponent implements OnInit,OnDestroy{
   }
 
   onFileSelected(event: Event):void {
+    this.imagePreview=null;
     const inputElement = event.target as HTMLInputElement;
     if (inputElement.files && inputElement.files.length > 0) {
       const file = inputElement.files[0];
@@ -174,6 +174,7 @@ export class CreateUserComponent implements OnInit,OnDestroy{
         this.errorMessage = null;
         this.selectedImageFile = file;
         // Proceed with generating image preview
+        
         this.generateImagePreview(file);
       }
     }
