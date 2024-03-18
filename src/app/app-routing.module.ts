@@ -11,6 +11,7 @@ import { CreateRoleComponent } from './components/roles/create-role/create-role.
 import { ProductsComponent } from './components/products/products.component';
 import { CreateProductComponent } from './components/products/create-product/create-product.component';
 import { ProductDetailsComponent } from './components/products/product-details/product-details.component';
+import { EditUserComponent } from './components/users/edit-user/edit-user.component';
 
 const routes: Routes = [
   {path:"" , redirectTo:"/admin" , pathMatch:"full"},
@@ -20,6 +21,7 @@ const routes: Routes = [
       {path:"users" , component:UsersComponent},
       {path:"user-details/:id", component: UserDetailsComponent},
       {path:"create-user", component:CreateUserComponent},
+      {path:"edit-user/:id", component:EditUserComponent},
 
       {path:"roles", component:RolesComponent},
       {path:"create-role",component:CreateRoleComponent},

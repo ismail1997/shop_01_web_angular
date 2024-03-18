@@ -1,18 +1,22 @@
 <div *ngIf="message" class="alert alert-success">
     {{ message }}
-  </div>
-  
+</div>
+
 <div class="card p-3 shadow d-flex   gray-whity-color" *ngIf="usersPage$ |async as userPage ">
     <div class="card-header d-flex justify-content-between align-items-center ">
-        <h3 class="mb-0 blue-text" >Manage Users</h3>
+        <h3 class="mb-0 blue-text">Manage Users</h3>
         <div>
-            <button class="btn btn-sm custom-blue custom-button" routerLink="/admin/create-user"><i class="bi bi-person-fill-add "></i>New User</button>
-            <button class="btn btn-sm custom-green ms-2 custom-button"><i class="bi bi-filetype-csv "></i>Export csv</button>
-            <button class="btn btn-sm custom-green ms-2 custom-button"><i class="bi bi-file-earmark-excel-fill "></i>Export excel</button>
-            <button class="btn btn-sm custom-red ms-2 custom-button"><i class="bi bi-file-earmark-pdf-fill "></i>Export pdf</button>
+            <button class="btn btn-sm custom-blue custom-button" routerLink="/admin/create-user"><i
+                    class="bi bi-person-fill-add "></i>New User</button>
+            <button class="btn btn-sm custom-green ms-2 custom-button"><i class="bi bi-filetype-csv "></i>Export
+                csv</button>
+            <button class="btn btn-sm custom-green ms-2 custom-button"><i
+                    class="bi bi-file-earmark-excel-fill "></i>Export excel</button>
+            <button class="btn btn-sm custom-red ms-2 custom-button"><i class="bi bi-file-earmark-pdf-fill "></i>Export
+                pdf</button>
         </div>
     </div>
-    <div class="card-boyd " >
+    <div class="card-boyd ">
         <table class="table table-sm mt-2">
             <thead>
                 <tr>
@@ -30,28 +34,37 @@
             <tbody *ngIf="userPage.userDTOS">
                 <tr *ngFor="let user of userPage.userDTOS">
                     <td class="text-center">{{user.id}}</td>
-                    <td><img class="img-fluid rounded-image "  src ="{{usersHost+'/'+user.id+'/image'}}" alt="{{user.photos}}" alt=""></td>
+                    <td>
+                        <img class="img-fluid rounded-image" 
+                            src ="{{usersHost+'/'+user.id+'/image?d='+clock_tick}}"
+                            alt="{{user.photos}}" />
+                    </td>
                     <td>{{user.firstName}} {{user.lastName}}</td>
-                    
+
                     <td>{{user.email}}</td>
                     <td>
                         <ng-container *ngIf="user.roles && user.roles.length > 0; else emptyTdRoles">
-                       
+
                             <span *ngFor="let role of user.roles">
-                                <span class="badge custom-green ms-1"> {{ role.name  | lowercase}}</span>
+                                <span class="badge custom-green ms-1"> {{ role.name | lowercase}}</span>
                             </span>
-                            
+
                         </ng-container>
                         <ng-template #emptyTdRoles>
                             <span class="badge custom-red">No Role</span>
                         </ng-template>
                     </td>
-                    <td><button class="btn btn-sm" (click)="changeUserStatus(user.id,user.enabled)"><i [ngClass]="user.enabled ==true ? 'bi bi-check-circle-fill green-text h5' : 'bi bi-circle-fill text-secondary h5'"></i></button></td>
-                    <td>
-                        <button class="btn btn-sm custom-blue custom-button" (click)="onGetUserDetails(user.id)"><i class="bi bi-list"></i>Details</button>
+                    <td><button class="btn btn-sm" (click)="changeUserStatus(user.id,user.enabled)"><i
+                                [ngClass]="user.enabled ==true ? 'bi bi-check-circle-fill green-text h5' : 'bi bi-circle-fill text-secondary h5'"></i></button>
                     </td>
-                    <td> <button class="btn btn-sm custom-blue custom-button"><i class="bi bi-pencil-square"></i>Edit </button></td>
-                    <td> <button class="btn btn-sm custom-red custom-button"><i class="bi bi-trash-fill"></i>Remove</button></td>
+                    <td>
+                        <button class="btn btn-sm custom-blue custom-button" (click)="onGetUserDetails(user.id)"><i
+                                class="bi bi-list"></i>Details</button>
+                    </td>
+                    <td> <button class="btn btn-sm custom-blue custom-button" (click)="onEditUser(user.id)"><i
+                                class="bi bi-pencil-square"></i>Edit </button></td>
+                    <td> <button class="btn btn-sm custom-red custom-button"><i
+                                class="bi bi-trash-fill"></i>Remove</button></td>
                 </tr>
             </tbody>
         </table>

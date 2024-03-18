@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { UsersService } from '../../services/users.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Observable, Subject, map, takeUntil } from 'rxjs';
 import { User } from '../../models/user.model';
 import { UserPage } from '../../models/userpage.model';
@@ -12,6 +12,7 @@ import { environments } from '../../environment/environment';
   styleUrl: './users.component.css'
 })
 export class UsersComponent implements OnInit, OnDestroy {
+
 
 
 
@@ -29,12 +30,15 @@ export class UsersComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
 
 
-  constructor(private usersService: UsersService, private router: Router, private route: ActivatedRoute) { }
+  public clock_tick :number | undefined ;
+
+  constructor(private usersService: UsersService, private router: Router, private route: ActivatedRoute,private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
-    this.showMessageOfCreation();
     this.getUsers();
- 
+    this.showMessageOfCreation();
+
+    this.clock_tick= new Date().getTime();
   }
   ngOnDestroy(): void {
     this.unsubscribe$.next();
@@ -57,7 +61,9 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
  
-
+  refreshView(): void {
+    this.cdr.detectChanges();
+  }
  
 
   showMessageOfCreation() {
@@ -70,6 +76,7 @@ export class UsersComponent implements OnInit, OnDestroy {
           history.replaceState(null, '', cleanedUrl); // Clean the URL
         }, 3000); // Remove message after 3 seconds
       }
+
     });
   }
 
@@ -98,5 +105,15 @@ export class UsersComponent implements OnInit, OnDestroy {
     });
   }
   
+  onEditUser(userID: number) {
+    // Navigate to edit user component with query parameter to indicate refresh is needed
+    this.router.navigateByUrl(`/admin/edit-user/${userID}`);
 
+  }
+
+
+
+
+  
+  
 }

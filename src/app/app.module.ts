@@ -20,6 +20,7 @@ import { QuillModule } from 'ngx-quill';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductDetailsComponent } from './components/products/product-details/product-details.component';
 import { TrimImageExtensionPipe } from './pipes/trim-image-extension.pipe';
+import { EditUserComponent } from './components/users/edit-user/edit-user.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { TrimImageExtensionPipe } from './pipes/trim-image-extension.pipe';
     ProductsComponent,
     CreateProductComponent,
     ProductDetailsComponent,
-    TrimImageExtensionPipe
+    TrimImageExtensionPipe,
+    EditUserComponent
   ],
   imports: [
     BrowserModule,

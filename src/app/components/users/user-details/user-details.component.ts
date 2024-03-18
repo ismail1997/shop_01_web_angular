@@ -12,7 +12,7 @@ import { environments } from '../../../environment/environment';
 })
 export class UserDetailsComponent implements OnInit, OnDestroy {
 
-  public user !: Observable<User>;
+  public user :User | undefined ;
   public id!: number;
  
   private unsubscribe$ = new Subject<void>();
@@ -22,7 +22,14 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
-    this.user = this.userService.getOneUser(this.id);
+    this.userService.getOneUser(this.id).pipe(takeUntil(this.unsubscribe$)).subscribe({
+      next:data=>{
+        this.user=data;
+      },
+      error:err=>{
+        console.log(err);
+      }
+    });
  
   }
   ngOnDestroy(): void {

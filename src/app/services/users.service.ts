@@ -48,5 +48,8 @@ export class UsersService {
     return this.http.put(`${environments.HOST}${environments.USERS_ENDPOINT}/${id}${environments.USERS_UPDATE_ENABLED_STATUS}?enabled=${enabled !== null ? enabled : false}`,{enabled});
   }
 
+  public updateUser(id:number, user : User):Observable<User>{
+    return this.http.put<User>(`${environments.HOST}${environments.USERS_ENDPOINT}/${id}`,user);
+  }
 
 }

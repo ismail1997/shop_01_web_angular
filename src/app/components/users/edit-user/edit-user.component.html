@@ -1,53 +1,33 @@
 <div class="container">
-    <div class="">
-        <div *ngIf="emailExisted" class="alert custom-alert-danger white-text">Email Already Existed</div>
-    </div>
+
     <div class="card  shadow d-flex   gray-whity-color">
         <div class="card-header">
             <button class="btn btn-sm custom-blue custom-button" (click)="goToUsers()"><i class="fa-solid fa-circle-left"></i> Back</button>
-            <h2 class="text-center p-2" style="color:hsl(210, 69%, 19%)">Add New User</h2>
+            <h2 class="text-center p-2" style="color:hsl(210, 69%, 19%)">Update  User</h2>
         </div>
         <div class="card-body">
-            <form (ngSubmit)="submitForm()" [formGroup]="createUserForm" novalidate>
+            <form (ngSubmit)="submitForm()" [formGroup]="editUserForm" novalidate *ngIf="user">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="control-label mb-2">First Name :</label>
                             <input type="text" formControlName="firstName" class="form-control" />
-                            <small class="text-danger form-text " *ngIf="createUserForm.controls['firstName'].touched
-                            && createUserForm.controls['firstName'].errors
-                            && createUserForm.controls['firstName'].errors!['required']">
+                            <small class="text-danger form-text " *ngIf="editUserForm.controls['firstName'].touched
+                            && editUserForm.controls['firstName'].errors
+                            && editUserForm.controls['firstName'].errors!['required']">
                                 Name is Required
                             </small>
                             <small class="text-danger form-text "
-                                *ngIf="createUserForm.controls['firstName'].errors?.['minlength']">
+                                *ngIf="editUserForm.controls['firstName'].errors?.['minlength']">
                                 First Name must be at least 5 characters long.
                             </small>
                             <small class="text-danger form-text"
-                                *ngIf="createUserForm.controls['firstName'].errors?.['maxlength']">
+                                *ngIf="editUserForm.controls['firstName'].errors?.['maxlength']">
                                 First Name must be less than 15 characters long.
                             </small>
                         </div>
 
-                        <div class="form-group mt-3">
-                            <label class="control-label mb-2">Email :</label>
-                            <input type="text" formControlName="email"
-                            (input)="checkIfEmailExists()"
-                            class="form-control" />
-                            <small class="text-danger form-text " *ngIf="createUserForm.controls['email'].touched
-                            && createUserForm.controls['email'].errors
-                            && createUserForm.controls['email'].errors!['email']">
-                                Email is invalid
-                            </small>
-                            <small class="text-danger form-text"
-                                *ngIf="createUserForm.controls['email'].errors?.['maxlength']">
-                                Email must be less than 128 characters long.
-                            </small>
-                            <small class="text-danger form-text"
-                                *ngIf="createUserForm.controls['email'].touched && createUserForm.controls['email'].errors?.['required']">
-                                Email is required.
-                            </small>
-                        </div>
+                        
 
 
                         <div class="form-group mt-3">
@@ -55,9 +35,9 @@
                             <textarea class="form-control" formControlName="address" id="exampleFormControlTextarea1"
                                 rows="3"></textarea>
                             <small class="text-danger form-text"
-                                *ngIf="createUserForm.controls['address'].touched
-                                && createUserForm.controls['address'].errors
-                                && createUserForm.controls['address'].errors?.['maxlength']">
+                                *ngIf="editUserForm.controls['address'].touched
+                                && editUserForm.controls['address'].errors
+                                && editUserForm.controls['address'].errors?.['maxlength']">
                                 Address must be less than 255 characters long.
                             </small>
                         </div>
@@ -66,17 +46,17 @@
                         <div class="form-group mt-3">
                             <label class="control-label mb-2">Country :</label>
                             <input type="text" formControlName="country" class="form-control" />
-                            <small class="text-danger form-text " *ngIf="createUserForm.controls['country'].touched
-                            && createUserForm.controls['country'].errors
-                            && createUserForm.controls['country'].errors!['country']">
+                            <small class="text-danger form-text " *ngIf="editUserForm.controls['country'].touched
+                            && editUserForm.controls['country'].errors
+                            && editUserForm.controls['country'].errors!['country']">
                                 Country is Required
                             </small>
                             <small class="text-danger form-text "
-                                *ngIf="createUserForm.controls['country'].errors?.['minlength']">
+                                *ngIf="editUserForm.controls['country'].errors?.['minlength']">
                                 Country must be at least 3 characters long.
                             </small>
                             <small class="text-danger form-text"
-                                *ngIf="createUserForm.controls['country'].errors?.['maxlength']">
+                                *ngIf="editUserForm.controls['country'].errors?.['maxlength']">
                                 Country must be less than 25 characters long.
                             </small>
                         </div>
@@ -85,17 +65,17 @@
                         <div class="form-group mt-3">
                             <label class="control-label mb-2">City :</label>
                             <input type="text" formControlName="city" class="form-control" />
-                            <small class="text-danger form-text " *ngIf="createUserForm.controls['firstName'].touched
-                            && createUserForm.controls['city'].errors
-                            && createUserForm.controls['city'].errors!['required']">
+                            <small class="text-danger form-text " *ngIf="editUserForm.controls['city'].touched
+                            && editUserForm.controls['city'].errors
+                            && editUserForm.controls['city'].errors!['required']">
                                 City is Required
                             </small>
                             <small class="text-danger form-text "
-                                *ngIf="createUserForm.controls['city'].errors?.['minlength']">
+                                *ngIf="editUserForm.controls['city'].errors?.['minlength']">
                                 City  must be at least 3 characters long.
                             </small>
                             <small class="text-danger form-text"
-                                *ngIf="createUserForm.controls['city'].errors?.['maxlength']">
+                                *ngIf="editUserForm.controls['city'].errors?.['maxlength']">
                                 City must be less than 25 characters long.
                             </small>
                         </div>
@@ -104,17 +84,17 @@
                         <div class="form-group mt-3">
                             <label class="control-label mb-2">Postal Code :</label>
                             <input type="text" formControlName="postalCode" class="form-control" />
-                            <small class="text-danger form-text " *ngIf="createUserForm.controls['postalCode'].touched
-                            && createUserForm.controls['postalCode'].errors
-                            && createUserForm.controls['postalCode'].errors!['required']">
+                            <small class="text-danger form-text " *ngIf="editUserForm.controls['postalCode'].touched
+                            && editUserForm.controls['postalCode'].errors
+                            && editUserForm.controls['postalCode'].errors!['required']">
                                 Postal Code is Required
                             </small>
                             <small class="text-danger form-text "
-                                *ngIf="createUserForm.controls['postalCode'].errors?.['minlength']">
+                                *ngIf="editUserForm.controls['postalCode'].errors?.['minlength']">
                                Postal Code must be at least 5 characters long.
                             </small>
                             <small class="text-danger form-text"
-                                *ngIf="createUserForm.controls['postalCode'].errors?.['maxlength']">
+                                *ngIf="editUserForm.controls['postalCode'].errors?.['maxlength']">
                                 Postal Code must be less than 10 characters long.
                             </small>
                         </div>
@@ -123,43 +103,49 @@
                         <div class="form-group">
                             <label class="control-label mb-2">Last Name</label>
                             <input type="text" formControlName="lastName" class="form-control" />
-                            <small class="text-danger form-text " *ngIf="createUserForm.controls['lastName'].touched
-                            && createUserForm.controls['lastName'].errors
-                            && createUserForm.controls['lastName'].errors!['required']">
+                            <small class="text-danger form-text " *ngIf="editUserForm.controls['lastName'].touched
+                            && editUserForm.controls['lastName'].errors
+                            && editUserForm.controls['lastName'].errors!['required']">
                                 Last Name is Required
                             </small>
                             <small class="text-danger form-text "
-                                *ngIf="createUserForm.controls['lastName'].errors?.['minlength']">
+                                *ngIf="editUserForm.controls['lastName'].errors?.['minlength']">
                                 Last Name must be at least 5 characters long.
                             </small>
                             <small class="text-danger form-text"
-                                *ngIf="createUserForm.controls['lastName'].errors?.['maxlength']">
+                                *ngIf="editUserForm.controls['lastName'].errors?.['maxlength']">
                                 Last Name must be less than 15 characters long.
                             </small>
                         </div>
                         <div class="form-group mt-3">
                             <label class="control-label mb-2">Password :</label>
                             <input type="password" formControlName="password" class="form-control" />
-                            <small class="text-danger form-text " *ngIf="createUserForm.controls['password'].touched
-                            && createUserForm.controls['password'].errors
-                            && createUserForm.controls['password'].errors!['required']">
+                            <small class="text-danger form-text " *ngIf="editUserForm.controls['password'].touched
+                            && editUserForm.controls['password'].errors
+                            && editUserForm.controls['password'].errors!['required']">
                                 Password is Required
                             </small>
                             <small class="text-danger form-text "
-                                *ngIf="createUserForm.controls['password'].errors?.['minlength']">
+                                *ngIf="editUserForm.controls['password'].errors?.['minlength']">
                                 Password must be at least 6 characters long.
                             </small>
                             <small class="text-danger form-text"
-                                *ngIf="createUserForm.controls['password'].errors?.['maxlength']">
+                                *ngIf="editUserForm.controls['password'].errors?.['maxlength']">
                                 Password must be less than 25 characters long.
                             </small>
                         </div>
                         <div class="form-group mt-3">
                             <label class="control-label mb-2">Image :</label>
-                            <input type="file" class="form-control" id="inputGroupFile02" (change)="onFileSelected($event)">
+                            <input type="file" class="form-control" id="inputGroupFile02" (change)="onFileSelected($event)" accept="image/png, image/jpeg">
                             <div *ngIf="errorMessage" class="error-message text-danger">{{ errorMessage }}</div>
-                            <small *ngIf="imagePreview">preview:</small>
-                            <img width="80" height="80" [src]="imagePreview" *ngIf="imagePreview" class="img-fluid mt-2" />
+                            <div *ngIf="imagePreview; else image" class="p-2">
+                                <small> Preview: </small>
+                                <img width="80" height="80" [src]="imagePreview" *ngIf="imagePreview" class="img-fluid mt-2" />
+                            </div>
+                            <ng-template #image>
+                                <!-- Content to display when user is loading or not available -->
+                                <img width="80" height="80" class="img-fluid p-2"  src ="{{usersHost+'/'+user.id+'/image'}}" alt="{{user.photos}}" alt="">
+                            </ng-template>
                         </div>
                         <div class="form-group mt-3">
                             <input class="form-check-input" formControlName="enabled" type="checkbox" value=""
@@ -171,10 +157,12 @@
                         <div class="form-group mt-3">
                             <h5>Roles</h5>
                             
-                            <ng-container *ngIf="listRoles" class="mt-2">
-                                <div *ngFor="let role of listRoles" class="row form-check ms-1">
+                            <ng-container *ngIf="availableRoles" class="mt-2">
+                                <div *ngFor="let role of availableRoles" class="row form-check ms-1">
                                     <input class="col-sm-3 form-check-input" type="checkbox" [value]="role.id"
-                                        [name]="role.name" (change)="onRoleCheckBoxChange($event)" />
+                                        [checked]="hasRole(role)"
+                                        (change)="onRoleChange(role, $event)"
+                                        [name]="role.name"  />
                                     <label class="col-sm-4 form-check-label">{{ role.name }}</label>
                                 </div>
                             </ng-container>
@@ -186,7 +174,7 @@
                 </div>
                 <div class="row">
                     <div class="col">
-                        <button type="submit" class="mt-3 btn btn-primary" [disabled]="!createUserForm.valid || emailExisted || errorMessage">Submit</button>
+                        <button type="submit" class="mt-3 btn btn-primary" [disabled]="!editUserForm.valid  ">Submit</button>
                     </div>
                     <div class="col text-end">
                         <button class="mt-3 btn btn-secondary" (click)="handleCancel()">Cancel</button>

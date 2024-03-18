@@ -16,7 +16,6 @@ export class CreateUserComponent implements OnInit,OnDestroy{
 
 
 
-  public roles$ !:Observable<Role[]>;
   public listRoles : Role[] = [];
   public idOfSelectedRoles: number[] = []
   public createUserForm !: FormGroup;
@@ -69,9 +68,9 @@ export class CreateUserComponent implements OnInit,OnDestroy{
   creatForm(){
     
     this.createUserForm=this.fb.group({
-      firstName:[null,[Validators.required,Validators.minLength(5),Validators.maxLength(15)]],
+      firstName:[null,[Validators.required,Validators.minLength(4),Validators.maxLength(15)]],
 
-      lastName:[null,[Validators.required,Validators.minLength(5),Validators.maxLength(15)]],
+      lastName:[null,[Validators.required,Validators.minLength(4),Validators.maxLength(15)]],
 
       email:[null,[Validators.required,Validators.email,Validators.maxLength(128)]],
 
@@ -96,7 +95,6 @@ export class CreateUserComponent implements OnInit,OnDestroy{
     
     if(this.selectedRoles){
       user.roles=this.selectedRoles;
-      console.log("stop watching porn ismail or you will go to hell1");
     }
 
 
@@ -148,7 +146,7 @@ export class CreateUserComponent implements OnInit,OnDestroy{
   }
 
 
-  checkIfEmailExistedOrNot():void {
+  checkIfEmailExists():void {
     const email = this.createUserForm.value.email;
     if(!email.trim()){
       this.emailExisted=false;
