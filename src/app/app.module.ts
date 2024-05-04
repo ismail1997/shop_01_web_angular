@@ -21,6 +21,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductDetailsComponent } from './components/products/product-details/product-details.component';
 import { TrimImageExtensionPipe } from './pipes/trim-image-extension.pipe';
 import { EditUserComponent } from './components/users/edit-user/edit-user.component';
+import { ConfirmationDeleteModalComponent } from './components/confirmation-delete-modal/confirmation-delete-modal.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { EditUserComponent } from './components/users/edit-user/edit-user.compon
     CreateProductComponent,
     ProductDetailsComponent,
     TrimImageExtensionPipe,
-    EditUserComponent
+    EditUserComponent,
+    ConfirmationDeleteModalComponent
   ],
   imports: [
     BrowserModule,

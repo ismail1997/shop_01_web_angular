@@ -112,8 +112,26 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
 
+  showConfirmationModal = false;
+  userIdToDelete: number | null = null;
 
 
-  
-  
+  openConfirmationDeleteModal(userId: number): void {
+    this.showConfirmationModal = true;
+    this.userIdToDelete = userId;
+  }
+  deleteUser(): void {
+    // Perform deletion logic using this.userIdToDelete
+    // Example: this.usersService.deleteUser(this.userIdToDelete);
+    this.closeConfirmationModal();
+  }
+
+  cancelDelete(): void {
+    this.closeConfirmationModal();
+  }
+
+  closeConfirmationModal(): void {
+    this.showConfirmationModal = false;
+    this.userIdToDelete = null;
+  }
 }
