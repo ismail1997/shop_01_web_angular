@@ -1,13 +1,10 @@
 <div *ngIf="message" class="alert alert-success">
     {{ message }}
 </div>
-<app-confirmation-delete-modal *ngIf="showConfirmationModal"
-                         (confirmed)="deleteUser()"
-                         (cancelled)="cancelDelete()">
-</app-confirmation-delete-modal>
+
 <div class="card p-3 shadow d-flex   gray-whity-color" *ngIf="usersPage$ |async as userPage ">
     <div class="card-header d-flex justify-content-between align-items-center ">
-        <h3 class="mb-0 blue-text">Manage Users</h3>
+        <h3 class="mb-0 blue-text"><strong>Manage Users</strong></h3>
         <div>
             <button class="btn btn-sm custom-blue custom-button" routerLink="/admin/create-user"><i
                     class="bi bi-person-fill-add "></i>New User</button>
@@ -66,8 +63,9 @@
                     </td>
                     <td> <button class="btn btn-sm custom-blue custom-button" (click)="onEditUser(user.id)"><i
                                 class="bi bi-pencil-square"></i>Edit </button></td>
-                    <td> <button class="btn btn-sm custom-red custom-button" (click)="openConfirmationDeleteModal(user.id)"><i
-                                class="bi bi-trash-fill"></i>Remove</button></td>
+                    <td>  <button class="btn btn-sm custom-red custom-button" (click)="openConfirmationDeleteModal(user.id)">
+                        <i class="bi bi-trash-fill"></i>Remove
+                      </button></td>
                 </tr>
             </tbody>
         </table>

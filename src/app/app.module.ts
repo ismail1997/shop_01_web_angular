@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,6 +26,7 @@ import { ProductDetailsComponent } from './components/products/product-details/p
 import { TrimImageExtensionPipe } from './pipes/trim-image-extension.pipe';
 import { EditUserComponent } from './components/users/edit-user/edit-user.component';
 import { ConfirmationDeleteModalComponent } from './components/confirmation-delete-modal/confirmation-delete-modal.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 
 @NgModule({
@@ -50,10 +55,15 @@ import { ConfirmationDeleteModalComponent } from './components/confirmation-dele
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    QuillModule.forRoot()
+    QuillModule.forRoot(),
+    BrowserAnimationsModule,
+    MatDialogModule,
+    MatButtonModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [
+    provideAnimationsAsync()
+  ],
+  bootstrap: [AppComponent],
 })
 export class AppModule {
 

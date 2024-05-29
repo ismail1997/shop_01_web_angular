@@ -5,6 +5,8 @@ import { Observable, Subject, map, takeUntil } from 'rxjs';
 import { User } from '../../models/user.model';
 import { UserPage } from '../../models/userpage.model';
 import { environments } from '../../environment/environment';
+import { ConfirmationDeleteModalComponent } from '../confirmation-delete-modal/confirmation-delete-modal.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-users',
@@ -32,7 +34,7 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   public clock_tick :number | undefined ;
 
-  constructor(private usersService: UsersService, private router: Router, private route: ActivatedRoute,private cdr: ChangeDetectorRef) { }
+  constructor(private usersService: UsersService, private router: Router, private route: ActivatedRoute,private cdr: ChangeDetectorRef,public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.getUsers();
@@ -112,26 +114,32 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
 
-  showConfirmationModal = false;
-  userIdToDelete: number | null = null;
-
-
   openConfirmationDeleteModal(userId: number): void {
-    this.showConfirmationModal = true;
-    this.userIdToDelete = userId;
-  }
-  deleteUser(): void {
-    // Perform deletion logic using this.userIdToDelete
-    // Example: this.usersService.deleteUser(this.userIdToDelete);
-    this.closeConfirmationModal();
+    const dialogRef = this.dialog.open(ConfirmationDeleteModalComponent, {
+      width: '350px',
+      data: { userId }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteUser(userId);
+      }
+    });
   }
 
-  cancelDelete(): void {
-    this.closeConfirmationModal();
-  }
+  deleteUser(userId: number): void {
+    this.usersService.deleteUser(userId).pipe(takeUntil(this.unsubscribe$)).subscribe({
+      next:data=>{
+        this.message="user with id "+userId+" deleted successfully";
+        this.getUsers();//refresh retreviing users
+        setTimeout(() => {
+          this.message = null; // Clear message after 3 seconds
+        }, 2000);
+      },
+      error:err=>{
+        console.log("can not delete user");
+      },
 
-  closeConfirmationModal(): void {
-    this.showConfirmationModal = false;
-    this.userIdToDelete = null;
+    })
   }
 }

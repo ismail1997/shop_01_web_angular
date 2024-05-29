@@ -18,7 +18,7 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
   public usersHost : string = environments.HOST+environments.USERS_ENDPOINT;
 
-  constructor(private userService: UsersService, private route: ActivatedRoute) { }
+  constructor(private userService: UsersService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
@@ -38,7 +38,11 @@ export class UserDetailsComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
- 
+  onEditUser() {
+    // Navigate to edit user component with query parameter to indicate refresh is needed
+    this.router.navigateByUrl(`/admin/edit-user/${this.id}`);
+
+  }
  
 
 }

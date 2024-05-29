@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Inject, Output } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-confirmation-delete-modal',
@@ -6,14 +7,18 @@ import { Component, EventEmitter, Output } from '@angular/core';
   styleUrl: './confirmation-delete-modal.component.css'
 })
 export class ConfirmationDeleteModalComponent {
-  @Output() confirmed = new EventEmitter<void>();
-  @Output() cancelled = new EventEmitter<void>();
+  constructor(
+    public dialogRef: MatDialogRef<ConfirmationDeleteModalComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 
-  confirm(): void {
-    this.confirmed.emit();
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 
-  cancel(): void {
-    this.cancelled.emit();
+  confirmDelete(): void {
+    this.dialogRef.close(true);
   }
+
+
 }

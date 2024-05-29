@@ -9,7 +9,7 @@
                         <img class="img-fluid profile-image " src="{{usersHost+'/'+user.id+'/image'}}" alt="User Image">
                         <div class="text-center mt-3">
                             <h4>{{user.firstName}} {{user.lastName}}</h4>
-                            <h6>{{user.email}}</h6>
+                            <h4>{{user.email}}</h4>
                         </div>
 
                         <ng-container *ngIf="user.enabled;else not_enabled">
@@ -28,7 +28,7 @@
                     <div class="card-body">
                         <div class="row ">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">Full Name</h6>
+                                <h4 class="mb-0">Full Name</h4>
                             </div>
                             <div class="col-sm-9 text-secondary">
                                 {{user.firstName}} {{user.lastName}}
@@ -37,7 +37,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">Email</h6>
+                                <h4 class="mb-0">Email</h4>
                             </div>
                             <div class="col-sm-9 text-secondary">
                                 {{user.email}}
@@ -46,7 +46,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">Country</h6>
+                                <h4 class="mb-0">Country</h4>
                             </div>
                             <div class="col-sm-9 text-secondary">
                                 {{user.country}}
@@ -55,7 +55,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">City</h6>
+                                <h4 class="mb-0">City</h4>
                             </div>
                             <div class="col-sm-9 text-secondary">
                                 {{user.city}}
@@ -64,7 +64,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">Postal Code</h6>
+                                <h4 class="mb-0">Postal Code</h4>
                             </div>
                             <div class="col-sm-9 text-secondary">
                                 {{user.postalCode}}
@@ -73,7 +73,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">Address</h6>
+                                <h4 class="mb-0">Address</h4>
                             </div>
                             <div class="col-sm-9 text-secondary">
                                 {{user.address}}
@@ -82,7 +82,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-sm-3">
-                                <h6 class="mb-0">Roles</h6>
+                                <h4 class="mb-0">Roles</h4>
                             </div>
                             <div class="col-sm-9">
 
@@ -105,6 +105,6 @@
 
     </div>
     <div class="card-footer">
-        <button class="btn btn-sm custom-orange white-text"><i class="fa-solid fa-file-pen"></i> Edit</button>
+        <button class="btn btn-sm custom-orange white-text"  (click)="onEditUser()"><i class="fa-solid fa-file-pen"></i> Edit</button>
     </div>
 </div>

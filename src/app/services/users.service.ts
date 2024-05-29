@@ -52,4 +52,9 @@ export class UsersService {
     return this.http.put<User>(`${environments.HOST}${environments.USERS_ENDPOINT}/${id}`,user);
   }
 
+
+  public deleteUser(id: number): Observable<void> {
+    const url = `${environments.HOST}${environments.USERS_ENDPOINT}/${id}`;
+    return this.http.delete<void>(url);
+  }
 }
